@@ -92,8 +92,8 @@ def main(input, out_dir):
 
   
     # write training and test data to csv files
-    train_df.to_csv((out_dir + 'train_df.csv'), index = False)
-    test_df.to_csv((out_dir + 'test_df.csv'), index = False)
+    transformed_train.to_csv((out_dir + 'train_df.csv'), index = False)
+    transformed_test.to_csv((out_dir + 'test_df.csv'), index = False)
 
     print("Data successfully stored in: ", (out_dir + 'train_df.csv'), " and ", (out_dir + 'train_df.csv'))
 
