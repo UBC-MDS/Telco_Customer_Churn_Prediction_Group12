@@ -81,12 +81,12 @@ def main(input, out_dir):
 
     transformed_train = pd.DataFrame(transformed_train,
                                         columns = (numeric_features + list(preprocessor.named_transformers_['onehotencoder'].get_feature_names_out()) + pass_through_features)
-                                        ).head(5)
+                                        )
 
 
     transformed_test = pd.DataFrame(transformed_test,
                                         columns = (numeric_features + list(preprocessor.named_transformers_['onehotencoder'].get_feature_names_out()) + pass_through_features)
-                                        ).head(5)
+                                        )
 
 
 
