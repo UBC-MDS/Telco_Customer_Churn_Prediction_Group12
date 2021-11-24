@@ -45,6 +45,9 @@ def main(input, out_dir):
 
     raw_data['TotalCharges'] = raw_data['TotalCharges'].astype(float)  
 
+    # Change target variable to a boolean
+    raw_data['Churn'] = raw_data['Churn'].replace("Yes", True)
+    raw_data['Churn'] = raw_data['Churn'].replace("No", False)
 
     # split into training and test data sets
     train_df, test_df = train_test_split(raw_data, test_size=0.3, random_state=1)
