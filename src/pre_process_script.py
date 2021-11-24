@@ -49,54 +49,18 @@ def main(input, out_dir):
     raw_data['Churn'] = raw_data['Churn'].replace("Yes", True)
     raw_data['Churn'] = raw_data['Churn'].replace("No", False)
 
+    # Change target variable to a boolean
+    raw_data['SeniorCitizen'] = raw_data['SeniorCitizen'].replace(1, "Yes")
+    raw_data['SeniorCitizen'] = raw_data['SeniorCitizen'].replace(0, "No")
+
+
     # split into training and test data sets
     train_df, test_df = train_test_split(raw_data, test_size=0.3, random_state=1)
 
-
-    # Define column transformer for transformations
-    numeric_features = ['MonthlyCharges', 'tenure', 'TotalCharges']
-
-    categorical_features = ['gender', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 
-                            'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection',
-                            'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling', 
-                        'PaymentMethod']
-
-    pass_through_features = ['SeniorCitizen', 'Churn']
-
-    numeric_pipeline = Pipeline(steps=[
-        ("simpleimputer", SimpleImputer()),
-        ("standardscaler", StandardScaler() )
-        ]
-    )
-
-    preprocessor = make_column_transformer(
-                                            (numeric_pipeline, numeric_features),
-                                            (OneHotEncoder(handle_unknown="ignore", sparse=True), categorical_features),
-                                            ('passthrough', pass_through_features)
-                                        )
-
-
-    transformed_train = preprocessor.fit_transform(train_df)
-
-    transformed_test = preprocessor.fit_transform(test_df)
-
-    #list(preprocessor.named_transformers_['pipeline']['onehotencoder'].get_feature_names_out())
-
-    transformed_train = pd.DataFrame(transformed_train,
-                                        columns = (numeric_features + list(preprocessor.named_transformers_['onehotencoder'].get_feature_names_out()) + pass_through_features)
-                                        )
-
-
-    transformed_test = pd.DataFrame(transformed_test,
-                                        columns = (numeric_features + list(preprocessor.named_transformers_['onehotencoder'].get_feature_names_out()) + pass_through_features)
-                                        )
-
-
-
   
     # write training and test data to csv files
-    transformed_train.to_csv((out_dir + 'train_df.csv'), index = False)
-    transformed_test.to_csv((out_dir + 'test_df.csv'), index = False)
+    train_df.to_csv((out_dir + 'train_df.csv'), index = False)
+    test_df.to_csv((out_dir + 'test_df.csv'), index = False)
 
     print("Data successfully stored in: ", (out_dir + 'train_df.csv'), " and ", (out_dir + 'train_df.csv'))
 
