@@ -49,9 +49,13 @@ def main(input, out_dir):
     raw_data['Churn'] = raw_data['Churn'].replace("Yes", True)
     raw_data['Churn'] = raw_data['Churn'].replace("No", False)
 
+    # Change target variable to a boolean
+    raw_data['SeniorCitizen'] = raw_data['SeniorCitizen'].replace(1, "Yes")
+    raw_data['SeniorCitizen'] = raw_data['SeniorCitizen'].replace(0, "No")
+
+
     # split into training and test data sets
     train_df, test_df = train_test_split(raw_data, test_size=0.3, random_state=1)
-
 
   
     # write training and test data to csv files
