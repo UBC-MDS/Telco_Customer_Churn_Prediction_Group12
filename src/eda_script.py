@@ -1,9 +1,8 @@
-
 # author: Anupriya Srivastava
 # date: 2021-11-24
 
 '''
-Performs exploratory data analysis on the Telco Churn data (from hhttps://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv). Saves the figures for .png files.
+Performs exploratory data analysis on the Telco Churn data (from hhttps://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv). Saves output figures in .png files.
 
 Usage: src/eda_script.py --input=<input> --out_dir=<out_dir>
   
