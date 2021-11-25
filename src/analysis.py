@@ -1,10 +1,8 @@
 # author: GROUP 12
 # date: 2021-11-25
 	
-'''This script downloads a data file in csv format. 
-This script takes an unquoted data file path to a csv file, 
-the name of the file type to write the file to (ex. csv), 
-and the name of a file path to write locally (including the name of the file).
+'''This script first tunes a LogisticRegression model using grid search, and then tests the model
+before outputting a confusion matrix and classification report to our results folder. 
 	
 Usage: analysis.py --train_path=<train_path> --test_path=<test_path> --out_dir=<out_dir>
 	
@@ -37,6 +35,7 @@ from sklearn.model_selection import GridSearchCV
 opt = docopt(__doc__)
 class_report_name = "classification_report.csv"
 confusion_matrix_name = "confusion_matrix.png"
+feature_importance_filename = "feature_importance.csv"
 
 def main(train_path, test_path, out_dir):
 
@@ -105,7 +104,16 @@ def main(train_path, test_path, out_dir):
 
 
     # Build & export dataframe of most positively & negatively correlated features
-    #TODO
+    feature_imp_df = pd.DataFrame(
+        data=feats,
+        index=cols,
+        columns=["Coefficient"],
+    )
+    try:
+        feature_imp_df.to_csv(os.path.join(out_dir, feature_importance_filename))
+    except:
+        os.makedirs(os.path.dirname(out_dir))
+        feature_imp_df.to_csv(os.path.join(out_dir, feature_importance_filename))
 
     # Run best model on test data
     preds = best_lr_pipe.predict(X_test)
