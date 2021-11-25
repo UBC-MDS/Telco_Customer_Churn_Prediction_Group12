@@ -13,14 +13,11 @@ Options:
 '''
 
 import os
-import sys
-from threading import excepthook
 import pandas as pd
 import numpy as np
 from docopt import docopt
 from sklearn.compose import make_column_transformer
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline, make_pipeline
@@ -28,7 +25,6 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.metrics import (
     classification_report,
     ConfusionMatrixDisplay,
-    f1_score,
 )
 from sklearn.model_selection import GridSearchCV
 
@@ -65,6 +61,7 @@ def main(train_path, test_path, out_dir):
                         'PaymentMethod', 'SeniorCitizen']
 
     drop_features = ["customerID", "gender"]
+
     preprocessor = build_preprocessor(numeric_features, categorical_features, drop_features)
 
     # Build pipeline for hyperparameter optimization
