@@ -16,6 +16,7 @@ Options:
 
 import os
 import sys
+from threading import excepthook
 import pandas as pd
 import numpy as np
 from docopt import docopt
@@ -28,7 +29,7 @@ from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.metrics import (
     classification_report,
-    confusion_matrix,
+    ConfusionMatrixDisplay,
     f1_score,
 )
 from sklearn.model_selection import GridSearchCV
@@ -120,6 +121,13 @@ def main(train_path, test_path, out_dir):
     except:
         os.makedirs(os.path.dirname(out_dir))
         class_report_df.to_csv(os.path.join(out_dir, class_report_name))
+
+    # Generate confusion matrix
+    cm = ConfusionMatrixDisplay.from_estimator(
+        best_lr_pipe, X_test, y_test, values_format="d", display_labels=["Non Churn", "Churn"]
+    )
+    cm.figure_.savefig(os.path.join(out_dir, confusion_matrix_name))
+    
 
 
 def build_preprocessor(numeric_features, 
