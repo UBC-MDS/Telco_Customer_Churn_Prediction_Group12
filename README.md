@@ -22,7 +22,8 @@ The final report can be found here
 
 To replicate the analysis, clone this GitHub repository, install the dependencies listed below, and run the following commands at the command line/terminal from the root directory of this project:
 
-```# download data
+```
+# download data
 python data_download.py --file_path=https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv --out_type=csv  --out_file=../data/raw/IBM-Telco-Customer-Churn.csv
 
 # run eda report
