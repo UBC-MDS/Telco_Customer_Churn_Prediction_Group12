@@ -1,10 +1,8 @@
 # author: GROUP 12
 # date: 2021-11-25
 	
-'''This script downloads a data file in csv format. 
-This script takes an unquoted data file path to a csv file, 
-the name of the file type to write the file to (ex. csv), 
-and the name of a file path to write locally (including the name of the file).
+'''This script first tunes a LogisticRegression model using grid search, and then tests the model
+before outputting a confusion matrix and classification report to our results folder. 
 	
 Usage: analysis.py --train_path=<train_path> --test_path=<test_path> --out_dir=<out_dir>
 	
@@ -15,14 +13,11 @@ Options:
 '''
 
 import os
-import sys
-from threading import excepthook
 import pandas as pd
 import numpy as np
 from docopt import docopt
 from sklearn.compose import make_column_transformer
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline, make_pipeline
@@ -30,13 +25,13 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.metrics import (
     classification_report,
     ConfusionMatrixDisplay,
-    f1_score,
 )
 from sklearn.model_selection import GridSearchCV
 
 opt = docopt(__doc__)
 class_report_name = "classification_report.csv"
 confusion_matrix_name = "confusion_matrix.png"
+feature_importance_filename = "feature_importance.csv"
 
 def main(train_path, test_path, out_dir):
 
@@ -46,15 +41,16 @@ def main(train_path, test_path, out_dir):
         test_df = pd.read_csv(test_path)
     except Exception as e:
         print("Unable to read training/test data. Please check filepath's.")
+
+    # Ensure output directory exists
+    if not os.path.exists(out_dir):
+        try:
+            os.makedirs(out_dir)
+        except:
+            print("Wasn't able to create output directory. Check permissions.")
     
     # Split into features/targets
-    X_train = train_df.drop(columns=["Churn"])
-    print(X_train.head())
-
-    X_test = test_df.drop(columns=["Churn"])
-
-    y_train = train_df["Churn"]
-    y_test = test_df["Churn"]
+    X_train, y_train, X_test, y_test = split_feature_targets(train_df, test_df)
 
     # Build Preprocessor
     numeric_features = ['MonthlyCharges', 'tenure', 'TotalCharges']
@@ -105,7 +101,13 @@ def main(train_path, test_path, out_dir):
 
 
     # Build & export dataframe of most positively & negatively correlated features
-    #TODO
+    feature_imp_df = pd.DataFrame(
+        data=feats,
+        index=cols,
+        columns=["Coefficient"],
+    )
+    
+    feature_imp_df.to_csv(os.path.join(out_dir, feature_importance_filename))
 
     # Run best model on test data
     preds = best_lr_pipe.predict(X_test)
@@ -114,13 +116,10 @@ def main(train_path, test_path, out_dir):
     class_report = classification_report(
         y_test, preds, target_names=["non-Churn", "Churn"], output_dict=True
     )
+
     class_report_df = pd.DataFrame(class_report).transpose()
-    print(class_report_df)
-    try:
-        class_report_df.to_csv(os.path.join(out_dir, class_report_name))
-    except:
-        os.makedirs(os.path.dirname(out_dir))
-        class_report_df.to_csv(os.path.join(out_dir, class_report_name))
+
+    class_report_df.to_csv(os.path.join(out_dir, class_report_name))
 
     # Generate confusion matrix
     cm = ConfusionMatrixDisplay.from_estimator(
@@ -128,12 +127,17 @@ def main(train_path, test_path, out_dir):
     )
     cm.figure_.savefig(os.path.join(out_dir, confusion_matrix_name))
     
+def split_feature_targets(train_df, test_df):
+    X_train = train_df.drop(columns=["Churn"])
+    X_test = test_df.drop(columns=["Churn"])
 
+    y_train = train_df["Churn"]
+    y_test = test_df["Churn"]
 
-def build_preprocessor(numeric_features, 
-                        categorical_features, 
-                        drop_features=[]):
-    
+    return X_train, y_train, X_test, y_test
+
+def build_preprocessor(numeric_features, categorical_features, drop_features):
+
     # Numeric pipeline
     numeric_pipeline = Pipeline(steps=[
         ("simpleimputer", SimpleImputer()),

@@ -3,7 +3,7 @@
 # date: 2021-11-23
 	
 '''
-Cleans, splits and pre-processes (scales, encodes and imputes) the Telco Churn data (from hhttps://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv).
+Cleans, splits and pre-processes the Telco Churn data (from hhttps://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv).
 Writes the training and test data to separate csv files.
 
 Usage: src/pre_process_script.py --input=<input> --out_dir=<out_dir>
@@ -53,6 +53,8 @@ def main(input, out_dir):
     raw_data['SeniorCitizen'] = raw_data['SeniorCitizen'].replace(1, "Yes")
     raw_data['SeniorCitizen'] = raw_data['SeniorCitizen'].replace(0, "No")
 
+    # Drop Gender (ethical constraints), and customerID
+    raw_data = raw_data.drop(columns=["gender", "customerID"])
 
     # split into training and test data sets
     train_df, test_df = train_test_split(raw_data, test_size=0.3, random_state=1)
