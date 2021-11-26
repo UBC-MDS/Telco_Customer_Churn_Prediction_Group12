@@ -11,93 +11,142 @@ Options:
 --out_dir=<out_dir>   Path to directory where the figures should be saved
 '''
 
-import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
 import altair as alt
+from altair_saver import save
 import seaborn as sns
 import matplotlib.pyplot as plt
-%matplotlib inline
+import dataframe_image as dfi
+from docopt import docopt
 
 alt.renderers.enable('mimetype')
 
 opt = docopt(__doc__)
 
+
 def main(input, out_dir):
 
     # read data and convert class to pandas df
-    raw_data = pd.read_csv(input) 
+    train_df = pd.read_csv(input)
 
-    # Converting TotalCharges from object to float (pd functions astype(float))
-    index = 0
-    s = raw_data['TotalCharges']
+    # Data Wrangling
+    train_df['Churn'] = train_df['Churn'].replace(True, "True")
+    train_df['Churn'] = train_df['Churn'].replace(False, "False")
 
-    for c in s:
+    train_df = train_df.rename(columns={'tenure': 'Tenure',
+                                        'SeniorCitizen': 'Senior Citizen',
+                                        'MonthlyCharges': 'Monthly Charges',
+                                        'TotalCharges': 'Total Charges',
+                                        'InternetService': 'Internet Service',
+                                        'MultipleLines': 'Multiple Lines',
+                                        'OnlineSecurity': 'Online Security',
+                                        'OnlineBackup': 'Online Backup',
+                                        'DeviceProtection': 'Device Protection',
+                                        'StreamingMovies': 'Streaming Movies',
+                                        'StreamingTV': 'Streaming TV',
+                                        'PhoneService': 'Phone Service',
+                                        'TechSupport': 'Tech Support',
+                                        'PaperlessBilling': 'Paperless Billing',
+                                        'PaymentMethod': 'Payment Method'})
 
-        if c == ' ':
-            raw_data['TotalCharges'][index] = None
+    # Analysing class imbalance for target variable
+    churn_dist_df = pd.DataFrame(round(train_df["Churn"].value_counts(normalize=True), 2))
+
+    target_class_imbalance = alt.Chart(train_df, title='Class imbalance').mark_bar(opacity=0.6).encode(
+                                    alt.X('Churn:N'),
+                                    alt.Y('count()', title='Count'),
+                                    color='Churn',
+                                    ).properties(
+                                        width=200, height=200
+                                    ).configure_axis(
+                                        labelFontSize=14,
+                                        titleFontSize=16
+                                    ).configure_legend(
+                                        titleFontSize=14
+                                    ).configure_title(
+                                        fontSize=18
+                                    )
+
+    # Numerical features EDA
+    numeric_feat_dist = alt.Chart(train_df).mark_bar(opacity=0.6).encode(
+                             alt.X(alt.repeat(), type='quantitative', bin=alt.Bin(maxbins=40)),
+                             alt.Y('count()', title='Count', stack=False),
+                             color='Churn'
+                             ).properties(
+                                width=200, height=200
+                            ).repeat(
+                                ['Tenure', 'Monthly Charges', 'Total Charges']
+                            )
     
-        index +=1
+    numeric_feat_pairplot = sns.pairplot(train_df)
 
-    raw_data['TotalCharges'] = raw_data['TotalCharges'].astype(float)  
+    cor = train_df.corr()
+    plt.figure(figsize=(10, 10))
+    sns.set(font_scale=1)
+    numeric_feat_corr = sns.heatmap(cor, annot=True, cmap=plt.cm.Reds);
 
-    # Change target variable to a boolean
-    raw_data['Churn'] = raw_data['Churn'].replace("Yes", True)
-    raw_data['Churn'] = raw_data['Churn'].replace("No", False)
+    # Categorical features EDA
+    train_cat = train_df.select_dtypes(include='object').copy()
+    catfeatures_stats = pd.DataFrame(columns=['Feature', 'Unique values', 'Categories', 'Missing values'])
+    tmp = pd.DataFrame()
+    for c in train_cat.columns:
+        tmp['Feature'] = [c]
+        tmp['Unique values'] = [train_cat[c].unique()]
+        tmp['Categories'] = int(train_cat[c].nunique())
+        tmp['Missing values'] = train_cat[c].isnull().sum()
+        catfeatures_stats = catfeatures_stats.append(tmp)
 
-    # split into training and test data sets
-    train_df, test_df = train_test_split(raw_data, test_size=0.3, random_state=1)
+    cat_feat_dist = alt.Chart(train_df).mark_bar().encode(
+                         alt.Y(alt.repeat(), type='nominal'),
+                         x='count()',
+                    ).properties(
+                         width=130, height=80
+                    ).repeat(
+                        ['Senior Citizen', 'Partner', 'Dependents', 'Phone Service',
+                         'Multiple Lines', 'Internet Service', 'Online Security', 'Online Backup',
+                         'Device Protection', 'Tech Support', 'Streaming TV', 'Streaming Movies',
+                         'Contract', 'Paperless Billing', 'Payment Method'],
+                        columns=3
+                    )
 
+    cat_feat_churn_dist = alt.Chart(train_df).mark_bar().encode(
+                            alt.X('count()', title='Count'),
+                            alt.Y(alt.repeat(), type='nominal'),
+                            alt.Color('Churn')
+                    ).properties(
+                            height=100, width=300
+                    ).repeat(
+                            ['Senior Citizen', 'Partner', 'Dependents'],
+                            columns=1
+                    )
 
-    # Define column transformer for transformations
-    numeric_features = ['MonthlyCharges', 'tenure', 'TotalCharges']
+    cat_feat_2dhist = alt.Chart(train_df).mark_square().encode(
+                            alt.X(alt.repeat(), type='nominal'),
+                            y='Churn',
+                            color='count()',
+                            size='count()'
+                    ).properties(
+                            width=150, height=80
+                    ).repeat(
+                            ['Contract', 'Internet Service', 'Multiple Lines', 'Online Security',
+                             'Online Backup', 'Device Protection', 'Streaming Movies', 'Streaming TV',
+                             'Phone Service', 'Tech Support', 'Paperless Billing', 'Payment Method'],
+                            columns=3
+                    )
 
-    categorical_features = ['gender', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 
-                            'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection',
-                            'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling', 
-                        'PaymentMethod']
+    # Saving all outputs
+    dfi.export(churn_dist_df, f"{out_dir}/table_1_churn_dist.png")
+    dfi.export(catfeatures_stats, f"{out_dir}/table_2_cat_unique_values.png")
+    # target_class_imbalance.save(f"{out_dir}/figure_1_class_imbalance.png", scale_factor=3)
+    # numeric_feat_dist.save(f"{out_dir}/figure_2_numeric_feat_dist.png", scale_factor=3)
+    numeric_feat_corr.figure.savefig(f"{out_dir}/figure_3_numeric_feat_corr.png", scale_factor=3)
+    numeric_feat_pairplot.figure.savefig(f"{out_dir}/figure_4_numeric_feat_pairplot.png")
+    # cat_feat_dist.save(f"{out_dir}/figure_5_cat_feat_dist.png", scale_factor=3)
+    # cat_feat_churn_dist.save(f"{out_dir}/figure_6_cat_feat_churn_dist.png", scale_factor=3)
+    # cat_feat_2dhist.save(f"{out_dir}/figure_7_cat_feat_2dhist.png", scale_factor=3)
 
-    pass_through_features = ['SeniorCitizen', 'Churn']
-
-    numeric_pipeline = Pipeline(steps=[
-        ("simpleimputer", SimpleImputer()),
-        ("standardscaler", StandardScaler() )
-        ]
-    )
-
-    preprocessor = make_column_transformer(
-                                            (numeric_pipeline, numeric_features),
-                                            (OneHotEncoder(handle_unknown="ignore", sparse=True), categorical_features),
-                                            ('passthrough', pass_through_features)
-                                        )
-
-
-    transformed_train = preprocessor.fit_transform(train_df)
-
-    transformed_test = preprocessor.fit_transform(test_df)
-
-    #list(preprocessor.named_transformers_['pipeline']['onehotencoder'].get_feature_names_out())
-
-    transformed_train = pd.DataFrame(transformed_train,
-                                        columns = (numeric_features + list(preprocessor.named_transformers_['onehotencoder'].get_feature_names_out()) + pass_through_features)
-                                        )
-
-
-    transformed_test = pd.DataFrame(transformed_test,
-                                        columns = (numeric_features + list(preprocessor.named_transformers_['onehotencoder'].get_feature_names_out()) + pass_through_features)
-                                        )
-
-
-
-
-    # write training and test data to csv files
-    transformed_train.to_csv((out_dir + 'train_df.csv'), index = False)
-    transformed_test.to_csv((out_dir + 'test_df.csv'), index = False)
-
-    print("Data successfully stored in: ", (out_dir + 'train_df.csv'), " and ", (out_dir + 'train_df.csv'))
-
+    print("EDA reports successfully stored in: ", (out_dir))
 
 if __name__ == "__main__":
-
-    # Call main method, and have the user input the raw file, out dir
+    # Call main method, and have the user input file, out dir
     main(opt["--input"], opt["--out_dir"])
