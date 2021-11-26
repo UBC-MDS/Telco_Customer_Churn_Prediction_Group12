@@ -60,9 +60,8 @@ def main(train_path, test_path, out_dir):
                             'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling', 
                         'PaymentMethod', 'SeniorCitizen']
 
-    drop_features = ["customerID", "gender"]
-
-    preprocessor = build_preprocessor(numeric_features, categorical_features, drop_features)
+    # Gender and customerID features were dropped in pre_process_script.py
+    preprocessor = build_preprocessor(numeric_features, categorical_features)
 
     # Build pipeline for hyperparameter optimization
     lr_pipe = make_pipeline(preprocessor, LogisticRegression(max_iter=10000))
@@ -128,6 +127,19 @@ def main(train_path, test_path, out_dir):
     cm.figure_.savefig(os.path.join(out_dir, confusion_matrix_name))
     
 def split_feature_targets(train_df, test_df):
+    """
+    Splits the training dataframe and test dataframe into X_train, y_train & X_test, y_test
+
+    Parameters:
+    train_df (pandas DataFrame object): the training dataframe
+    test_df (pandas DataFrame object): the test dataframe
+
+    Returns:
+    X_train (pandas DataFrame object): the training dataframe. Just features and no target. 
+    y_train (pandas DataFrame object): the training target values. 
+    X_test (pandas DataFrame object): the test dataframe. Just features and no target
+    y_test (pandas DataFrame object): the test target values. 
+    """
     X_train = train_df.drop(columns=["Churn"])
     X_test = test_df.drop(columns=["Churn"])
 
@@ -136,7 +148,7 @@ def split_feature_targets(train_df, test_df):
 
     return X_train, y_train, X_test, y_test
 
-def build_preprocessor(numeric_features, categorical_features, drop_features):
+def build_preprocessor(numeric_features, categorical_features):
 
     # Numeric pipeline
     numeric_pipeline = Pipeline(steps=[
@@ -148,8 +160,7 @@ def build_preprocessor(numeric_features, categorical_features, drop_features):
     # Build preprocessor
     preprocessor = make_column_transformer(
         (numeric_pipeline, numeric_features),
-        (OneHotEncoder(handle_unknown="ignore", sparse=True), categorical_features),
-        ("drop", drop_features)
+        (OneHotEncoder(handle_unknown="ignore", sparse=True), categorical_features)
     )
 
     return preprocessor
