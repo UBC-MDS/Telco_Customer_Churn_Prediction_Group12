@@ -35,7 +35,7 @@ python pre_process_script.py --input=../data/raw/IBM-Telco-Customer-Churn.csv --
 python eda_script.py --input=../data/raw/IBM-Telco-Customer-Churn.csv --out_dir=../results/
 
 # tune and test model
-# TODO
+python src/analysis.py --train_path="data/processed/train_df.csv" --test_path="data/processed/test_df.csv" --out_dir="results/"
 
 # render final report
 # TODO
