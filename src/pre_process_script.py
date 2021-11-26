@@ -3,7 +3,7 @@
 # date: 2021-11-23
 	
 '''
-Cleans, splits and pre-processes (scales, encodes and imputes) the Telco Churn data (from hhttps://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv).
+Cleans, splits and pre-processes the Telco Churn data (from hhttps://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv).
 Writes the training and test data to separate csv files.
 
 Usage: src/pre_process_script.py --input=<input> --out_dir=<out_dir>
