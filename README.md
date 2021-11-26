@@ -2,7 +2,7 @@
 
 - Contributors: Zihan Zhou, Anupriya Srivastava, Adam Morphy, Jordan Casoli 
 
-## Introduction
+## About
 
 For this project we are trying to answer the following question: given certain telecommunications customer characteristics, is a given customer likely to churn? A natural follow up question that we will also be addressing is: what customer characteristics are positively associated with high churn risk? Understanding the answers to these questions will provide actionable insights to telecommunications companies, allowing them to keep their customers for longer periods of time. Ultimately this will lead to higher customer lifetime value.
 
@@ -13,3 +13,44 @@ To begin, we will split the data into train and test sets (80% train/20% test). 
 At a high level, our plan to answer the predictive question stated above is to build a predictive classification model. We will focus on models that give some indication as to which features are positively or negatively associated with our target class (ex. A logistic regression model), as this is an important aspect of the overall problem. Our primary objective is to be able to identify customers who are at high risk of churning, therefore we will build a model that aims to reduce type II error at the expense of possibly committing more type I error.
 
 We will perform hyperparameter optimization, and then fit the best model on our train data before evaluating the model on our test set. At this point we will assess our final model performance using some combination of recall, precision, roc auc, and average precision. We will present a confusion matrix corresponding to our test results as a table in the final report. Finally, we will present a table showing the features most positively correlated with a high churn risk.
+
+## Report
+
+The final report can be found here
+
+## Usage
+
+To replicate the analysis, clone this GitHub repository, install the dependencies listed below, and run the following commands at the command line/terminal from the root directory of this project:
+
+```# download data
+python data_download.py --file_path=https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv --out_type=csv  --out_file=../data/raw/IBM-Telco-Customer-Churn.csv
+
+# run eda report
+# TODO
+
+# pre-process data 
+python pre_process_script.py --input=../data/raw/IBM-Telco-Customer-Churn.csv --out_dir=../data/processed/
+
+# create exploratory data analysis figure and write to file 
+python eda_script.py --input=../data/raw/IBM-Telco-Customer-Churn.csv --out_dir=../results/
+
+# tune and test model
+# TODO
+
+# render final report
+# TODO
+```
+## Dependancies
+
+* Python 3.9.7 and Python packages:
+    + docopt==0.6.2
+    + pandas==0.24.2
+    + numpy==1.21.4
+    + requests==2.22.0
+    + scikit-learn>=1.0
+    + matplotlib>=3.2.2
+    + altair==4.1.0
+    + seaborn==0.8.1
+    + jupyter-book==0.12.1
+
+## References
