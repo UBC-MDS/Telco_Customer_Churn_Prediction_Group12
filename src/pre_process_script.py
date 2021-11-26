@@ -53,6 +53,8 @@ def main(input, out_dir):
     raw_data['SeniorCitizen'] = raw_data['SeniorCitizen'].replace(1, "Yes")
     raw_data['SeniorCitizen'] = raw_data['SeniorCitizen'].replace(0, "No")
 
+    # Drop Gender (ethical constraints), and customerID
+    raw_data = raw_data.drop(columns=["gender", "customerID"])
 
     # split into training and test data sets
     train_df, test_df = train_test_split(raw_data, test_size=0.3, random_state=1)
