@@ -17,7 +17,7 @@ We will perform hyperparameter optimization, and then fit the best model on our 
 ## Report
 
 The final report can be found 
-[here](https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12/blob/main/docs/Telco_Customer_Churn_Prediction_Report.html)
+[here](https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12/blob/main/docs/Telco_Customer_Churn_Prediction_Report.Rmd)
 
 ## Usage
 
@@ -40,13 +40,13 @@ python src/eda_script.py --input=data/processed/train_df.csv --out_dir=results/
 python src/analysis.py --train_path="data/processed/train_df.csv" --test_path="data/processed/test_df.csv" --out_dir="results/"
 
 # render final report
-Rscript -e "rmarkdown::render('doc/Telco_Customer_Churn_Prediction_Report.Rmd', output_format = 'github_document')"
+Rscript -e "rmarkdown::render('docs/Telco_Customer_Churn_Prediction_Report.Rmd', output_format = 'github_document')"
 ```
 
 ## Environment
 
 The project environment can be found
-[here](https://github.com/adammorphy/Telco_Customer_Churn_Prediction_Group12/blob/main/env_telco_churn.yaml)
+[here](https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12/blob/main/env_telco_churn.yaml)
 
 The environment can be created via
 `conda env create --file env_telco_churn.yaml`
