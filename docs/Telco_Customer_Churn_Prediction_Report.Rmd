@@ -101,4 +101,6 @@ knitr::include_graphics("../results/confusion_matrix.png")
 
 # Limitations & Future
 
+To further improve on this model, there are a few ideas we can suggest. First, we would recommend testing different classification algorithms against the original logistic regression model to see if f1 score can be improved. The random forest classifier algorithm is an obvious candidate, given that it also allows you to extract feature importance's from the model. Second, given that some of our numerical features are highly correlated with each other, we would recommend using a feature selection algorithm (ex. recursive feature elimination (RFE)) to refine the features used in the final model. This would have the advantage of making the model more interpretable. Finally, it's possible that the model could be improved by choosing a better classification threshold. This could be done by plotting precision-recall curve during cross validation. Alternatively, it might make sense not to use "hard" predictions, and to instead use `predict_proba` to provide churn probabilities for each customer.
+
 # References
