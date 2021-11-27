@@ -8,46 +8,46 @@ output:
     toc: true
 bibliography: references_Telco_Customer_Churn_Prediction.bib
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(knitr)
 library(tidyverse)
-classification_report_df <- read_csv("../results/classification_report.csv")
-feature_importance_df <- read_csv("../results/feature_importance.csv")
 ```
-
 
 ```{r out.width = '30%'}
 knitr::include_graphics("../results/confusion_matrix.png")
 ```
+
 ```{r  echo=FALSE,  out.width = '30%'}
 knitr::include_graphics("../results/figure_3_numeric_feat_corr.png")
 ```
+
 ```{r  echo=FALSE,  out.width = '30%'}
 knitr::include_graphics("../results/figure_4_numeric_feat_pairplot.png")
 ```
+
 ```{r  echo=FALSE,  out.width = '30%'}
 knitr::include_graphics("../results/table_1_churn_dist.png")
 ```
+
 ```{r  echo=FALSE,  out.width = '30%'}
 knitr::include_graphics("../results/table_2_cat_unique_values.png")
 ```
 
-
-
 # Summary
 
-In this project, we attempt to examine the following question: Consider certain telecommunications customer characteristics, predict the likelihood that a given customer is likely to churn, and further understand what customer characteristics are positively associated with high churn risk. We performed a analysis, which yield the 
+In this project, we attempt to examine the following question: Consider certain telecommunications customer characteristics, predict the likelihood that a given customer is likely to churn, and further understand what customer characteristics are positively associated with high churn risk. We performed a analysis, which yield the
 
 # Introduction
 
-Customer churn risk, the risk of customers switching to another company, is considered one of the most significant threats to the revenue of telecommunication companies. (@pustokhina2021multi) The average churn rate in the telecom industry is approximately 1.9% per month, which translates to discontinued service for one in fifty subscribers of a given company.(@team_2020) Moreover, it is known that the cost of acquiring new customers is significantly higher than the cost of retaining them. (@pustokhina2021multi) Thus, it is clear that reducing churn risk and increasing customer retention rate is a key strategic challenge in the telecommunication industry.
-In our project, we are identifying a predictive classification model that can provide insights into which customers (based on their traits) are at higher risk of churning. Answering this question has important practical managerial implications for telecommunication companies because it is a crucial step in understanding how to reduce this risk and thus create higher customer lifetime value. Further, this predictive tool will be considered a contribution to the modern telecommunication customer relationship management systems.
+Customer churn risk, the risk of customers switching to another company, is considered one of the most significant threats to the revenue of telecommunication companies. (@pustokhina2021multi) The average churn rate in the telecom industry is approximately 1.9% per month, which translates to discontinued service for one in fifty subscribers of a given company.(@team_2020) Moreover, it is known that the cost of acquiring new customers is significantly higher than the cost of retaining them. (@pustokhina2021multi) Thus, it is clear that reducing churn risk and increasing customer retention rate is a key strategic challenge in the telecommunication industry. In our project, we are identifying a predictive classification model that can provide insights into which customers (based on their traits) are at higher risk of churning. Answering this question has important practical managerial implications for telecommunication companies because it is a crucial step in understanding how to reduce this risk and thus create higher customer lifetime value. Further, this predictive tool will be considered a contribution to the modern telecommunication customer relationship management systems.
 
 # Methods
 
 ## Data
-The dataset we are using comes from the public IBM github page, and is made available as part of an effort (by IBM) to teach the public how to use some of their machine learning tools. Unfortunately no mention is made of exactly how the data was collected, or who was responsible for the collection. Here is a link to the [mini-course](https://developer.ibm.com/patterns/predict-customer-churn-using-watson-studio-and-jupyter-notebooks/) that references the dataset we are using. The raw data is [here](https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv), and lives inside the data folder of the [public repository](https://github.com/IBM/telco-customer-churn-on-icp4d) for the mini-course. Each row in the dataset corresponds to a single customer. There are 19 feature columns, along with the target column, “churn”. 
+
+The dataset we are using comes from the public IBM github page, and is made available as part of an effort (by IBM) to teach the public how to use some of their machine learning tools. Unfortunately no mention is made of exactly how the data was collected, or who was responsible for the collection. Here is a link to the [mini-course](https://developer.ibm.com/patterns/predict-customer-churn-using-watson-studio-and-jupyter-notebooks/) that references the dataset we are using. The raw data is [here](https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv), and lives inside the data folder of the [public repository](https://github.com/IBM/telco-customer-churn-on-icp4d) for the mini-course. Each row in the dataset corresponds to a single customer. There are 19 feature columns, along with the target column, "churn".
 
 ## Data Cleaning and Preprocessing
 
@@ -58,18 +58,49 @@ First, `TotalCharges` feature has been converted into float64 datatype. Null val
 We are also dropping `gender` from the data frame due to ethical limitations of discriminating on gender for what makes customers likely to leave the company. `CustomerID` is dropped from the data as well, since it is not useful for prediction.
 
 ## Analysis
-We used the  k-nearest neighbors (k-nn) algorithm to build a classification model to predict which customer features (19 in total, see in the feature columns) can lead to higher churn risk (see in the churn column). We used the Python language[@Python] and the following Python packages were used to perform this analysis: docopt [@docopt], os [@Python], scikit-learn [@scikit-learn], Pandas [@reback2020pandas], Numpy Array[@2020NumPy-Array], matplotlib [@hunter2007matplotlib]and altair [@vanderplas2018altair]. We used the R language[@python] and the following Python packages were used to perform this analysis: knitr [@knitr], tidyverse [@tidyverse]. Our code for the analysis and our related resources and progress reports can be found here: (https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12)
 
+We used a logistic regression algorithm to build a classification model to predict which customers are likely to churn from their telecommunications company. Additionally, we reported which features are most positively & negatively correlated with our target, as learned by our model. We used the Python language[@Python] and the following Python packages were used to perform this analysis: docopt [@docopt], os [@Python], scikit-learn [@scikit-learn], Pandas [@reback2020pandas], Numpy Array[@2020NumPy-Array], matplotlib [@hunter2007matplotlib]and altair [@vanderplas2018altair]. We used the R language[@python] and the following R packages were used to perform this analysis: knitr [@knitr], tidyverse [@tidyverse]. Our code for the analysis and our related resources and progress reports can be found here: (<https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12>)
 
 # Results & Discussion
-To begin, we will split the data into train and test sets (80% train/20% test). We will then carry out preliminary EDA on the training data. Specifically, we need to understand whether class imbalance will be an issue in our analysis. Therefore, we will present a table that shows the two class counts. For each of our categorical/binary features, distributions across our two classes will be plotted as stacked bar charts. For each of our numeric features, distributions across our two classes will be plotted as stacked density charts.
 
-We will perform hyperparameter optimization, and then fit the best model on our train data before evaluating the model on our test set. At this point we will assess our final model performance using some combination of recall, precision, roc auc, and average precision. We will present a confusion matrix corresponding to our test results as a table in the final report. Finally, we will present a table showing the features most positively correlated with a high churn risk.
+We chose to use a simple logistic regression model, with f1 score as our primary scoring metric . To improve the performance of our model, we performed hyperparameter optimization in the form of an exhaustive grid search, with 4 cross validation folds, over hyperparameters `C` & `class_weight`. This yielded optimal parameters `C=0.01` & `class_weight="balanced"`
 
+After training our model on our full training set, these are the features most positively correlated with Churn:
+
+```{r positive feature importance}
+feature_importance_df <- read_csv("../results/feature_importance.csv")
+
+feature_importance_df |> 
+  arrange(desc(Coefficient)) |> 
+  head(5) |> 
+  knitr::kable(caption = "Summary of features most positively correlated with Churn") 
+```
+
+These are the features most negatively correlated with Churn:
+
+```{r}
+feature_importance_df |> 
+  arrange(Coefficient) |> 
+  head(5) |> 
+  knitr::kable(caption = "Summary of features most negatively correlated with Churn") 
+```
+
+On test data our model had satisfactory performance. With consideration to the "Churn" class, our model had an f1 score of \~0.63, a recall score of \~0.82, and a precision score of 0.51.
+
+```{r}
+classification_report_df <- read_csv("../results/classification_report.csv")
+
+classification_report_df |> knitr::kable(caption = "Classification report on test data.")
+```
+
+Given the business problem that our prediction algorithm is trying to solve, it was much more important for us to be able to identify the Churn class correctly (to minimize false negatives). As evidenced by the confusion matrix below, our model made 413 false positives and only 97 false negatives:
+
+```{r confusion matrix echo=FALSE,  out.width = '30%'}
+knitr::include_graphics("../results/confusion_matrix.png")
+```
 
 # Limitations & Future
 
-
+To further improve on this model, there are a few ideas we can suggest. First, we would recommend testing different classification algorithms against the original logistic regression model to see if f1 score can be improved. The random forest classifier algorithm is an obvious candidate, given that it also allows you to extract feature importance's from the model. Second, given that some of our numerical features are highly correlated with each other, we would recommend using a feature selection algorithm (ex. recursive feature elimination (RFE)) to refine the features used in the final model. This would have the advantage of making the model more interpretable. Finally, it's possible that the model could be improved by choosing a better classification threshold. This could be done by plotting precision-recall curve during cross validation. Alternatively, it might make sense not to use "hard" predictions, and to instead use `predict_proba` to provide churn probabilities for each customer.
 
 # References
-
