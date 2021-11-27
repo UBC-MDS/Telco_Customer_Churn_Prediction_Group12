@@ -4,7 +4,7 @@
 '''
 Performs exploratory data analysis on the Telco Churn data (from hhttps://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv). Saves output figures in .png files.
 
-Usage: python src/eda_script.py --input=<input> --out_dir=<out_dir>
+Usage: src/eda_script.py --input=<input> --out_dir=<out_dir>
 
 Options:
 --input=<input>       Path (including filename) to cleaned data (csv file)
@@ -120,11 +120,11 @@ def main(input, out_dir):
 
     # Saving all outputs
     dfi.export(catfeatures_stats, f"{out_dir}/table_1_cat_unique_values.png", table_conversion='latex')
-    #target_class_imbalance.save(f"{out_dir}/figure_1_class_imbalance.png", scale_factor=3)
-    #numeric_feat_dist.save(f"{out_dir}/figure_2_numeric_feat_dist.png", scale_factor=3)
+    target_class_imbalance.save(f"{out_dir}/figure_1_class_imbalance.png", scale_factor=3)
+    numeric_feat_dist.save(f"{out_dir}/figure_2_numeric_feat_dist.png", scale_factor=3)
     numeric_feat_corr.figure.savefig(f"{out_dir}/figure_3_numeric_feat_corr.png", scale_factor=3)
-    #cat_feat_churn_dist.save(f"{out_dir}/figure_4_cat_feat_churn_dist.png", scale_factor=3)
-    #cat_feat_2dhist.save(f"{out_dir}/figure_5_cat_feat_2dhist.png", scale_factor=3)
+    cat_feat_churn_dist.save(f"{out_dir}/figure_4_cat_feat_churn_dist.png", scale_factor=3)
+    cat_feat_2dhist.save(f"{out_dir}/figure_5_cat_feat_2dhist.png", scale_factor=3)
 
     print("EDA reports successfully stored in: ", (out_dir))
 
