@@ -16,31 +16,47 @@ We will perform hyperparameter optimization, and then fit the best model on our 
 
 ## Report
 
-The final report can be found here
+The final report can be found 
+[here](https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12/blob/main/docs/Telco_Customer_Churn_Prediction_Report.html)
 
 ## Usage
 
-To replicate the analysis, clone this GitHub repository, install the dependencies listed below, and run the following commands at the command line/terminal from the root directory of this project:
+To replicate the analysis, clone this GitHub repository, install the dependencies listed below (or install the given environment yaml file below), and run the following commands at the command line/terminal from the root directory of this project:
 
 ```
 # download data
-python data_download.py --file_path=https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv --out_type=csv  --out_file=../data/raw/IBM-Telco-Customer-Churn.csv
+python src/data_download.py --file_path=https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv --out_type=csv  --out_file=../data/raw/IBM-Telco-Customer-Churn.csv
 
 # run eda report
-# TODO
+jupyter-notebook src/telco_churn_eda.ipynb.ipynb
 
 # pre-process data 
-python pre_process_script.py --input=../data/raw/IBM-Telco-Customer-Churn.csv --out_dir=../data/processed/
+python src/pre_process_script.py --input=../data/raw/IBM-Telco-Customer-Churn.csv --out_dir=data/processed/
 
 # create exploratory data analysis figure and write to file 
-python eda_script.py --input=../data/raw/IBM-Telco-Customer-Churn.csv --out_dir=../results/
+python src/eda_script.py --input=data/processed/train_df.csv --out_dir=results/
 
 # tune and test model
 python src/analysis.py --train_path="data/processed/train_df.csv" --test_path="data/processed/test_df.csv" --out_dir="results/"
 
 # render final report
-# TODO
+Rscript -e "rmarkdown::render('doc/Telco_Customer_Churn_Prediction_Report.Rmd', output_format = 'github_document')"
 ```
+
+## Environment
+
+The project environment can be found
+[here](https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12/blob/main/env_telco_churn.yaml)
+
+The environment can be created via
+`conda env create --file env_telco_churn.yaml`
+
+Activate the environment via
+`conda activate telco`
+
+Deactivate the environment via
+`conda activate telco`
+
 ## Dependancies
 
 * Python 3.9.7 and Python packages:
@@ -51,7 +67,13 @@ python src/analysis.py --train_path="data/processed/train_df.csv" --test_path="d
     + scikit-learn>=1.0
     + matplotlib>=3.2.2
     + altair==4.1.0
+    + altair_saver
     + seaborn==0.8.1
-    + jupyter-book==0.12.1
+    + jsonschema=3.2.0
+    + chromedriver-py
+    + lxml
+- R version 4.1.1 and R packages:
+    + knitr==1.26
+    + tidyverse==1.2.1
 
 ## References
