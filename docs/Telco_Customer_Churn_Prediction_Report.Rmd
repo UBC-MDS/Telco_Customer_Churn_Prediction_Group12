@@ -1,6 +1,6 @@
 ---
 title: "Telco_Customer_Churn_Prediction_Report"
-author: "zihan zhou"
+author: "Adam Morphy, Zihan Zhou, Anupriya Srivastava, Jordan Casoli"
 date: "26/11/2021"
 always_allow_html: true
 output: 
@@ -15,25 +15,6 @@ library(knitr)
 library(tidyverse)
 ```
 
-```{r out.width = '30%'}
-knitr::include_graphics("../results/confusion_matrix.png")
-```
-
-```{r  echo=FALSE,  out.width = '30%'}
-knitr::include_graphics("../results/figure_3_numeric_feat_corr.png")
-```
-
-```{r  echo=FALSE,  out.width = '30%'}
-knitr::include_graphics("../results/figure_4_numeric_feat_pairplot.png")
-```
-
-```{r  echo=FALSE,  out.width = '30%'}
-knitr::include_graphics("../results/table_1_churn_dist.png")
-```
-
-```{r  echo=FALSE,  out.width = '30%'}
-knitr::include_graphics("../results/table_2_cat_unique_values.png")
-```
 
 # Summary
 
@@ -60,34 +41,34 @@ We are also dropping `gender` from the data frame due to ethical limitations of 
 ## Analysis
 
 We did exploratory data analysis (EDA) on the training data to get an preliminary understanding of the input features. We first looked at the distribution of target  (`Churn`) class to understand class imbalanced.
-```{r class imbalance echo=FALSE,  out.width = 60}
+```{r class imbalance, echo=FALSE, fig.cap = "Figure 1: Class Imbalance", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/figure_1_class_imbalance.png")
 ```
 
 We then segregated the features as numerical and categorical exploratory variables. The input data has 3 numerical and 12 categorical features. 
 
 For numerical variables, we looked into the distribution of these features for the two target classes. It was observed that `Tenure` is an important feature for giving split between the two target classes.
-```{r numerical features distribution echo=FALSE,  out.width = 60}
+```{r numerical features distribution, echo=FALSE, fig.cap = "Figure 2: Numerical Features Distribution", out.width = '100%', fig.align="center"}
 knitr::include_graphics("../results/figure_2_numeric_feat_dist.png")
 ```
 
 We also analyzed the correlation between the three numerical features. Here, it was observed that there is high positive correlation between `Tenure` and `Total Charges`
-```{r numerical features correlation echo=FALSE,  out.width = 60}
+```{r numerical features correlation, echo=FALSE, fig.cap = "Figure 3: Numerical Features Correlation", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/figure_3_numeric_feat_corr.png")
 ```
 
 We further analysed the significance of categorical features in predicting the target class. A summary of categorical feature classes is given below:
-```{r categorical features summary echo=FALSE,  out.width = 60}
+```{r categorical features summary, echo=FALSE, fig.cap = "Table 1: Categorical Features Summary", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/table_1_cat_unique_values.png")
 ```
 
 We observed the distribution of categorical features pertaining to demographics. It was noted that people with no dependents, no partner and senior citizens had a higher Churn.
-```{r categorical demographic features echo=FALSE,  out.width = 60}
+```{r categorical demographic features, echo=FALSE, fig.cap = "Figure 4: Categorical Demographic Features", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/figure_4_cat_feat_churn_dist.png")
 ```
 
 We further observed the distribution of categorical features pertaining to Telecom Company services. It was noted that the following categories have higher Churn: Internet Service (Fiber Optic service), Contract (Monthly), Online Security (No), Online Backup (No), Payment Method (Electronic Check), Paperless Billing (Yes), Tech Support (No), Device Protection (No). It was also noted the for the following features, customer churn was equally distributed across all categories: Multiple Lines, Streaming Movies, Streaming TV.
-```{r categorical service features echo=FALSE,  out.width = 60}
+```{r categorical service features, echo=FALSE, fig.cap = "Figure 5: Categorical Service Features", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/figure_5_cat_feat_2dhist.png")
 ```
 
@@ -99,35 +80,33 @@ We chose to use a simple logistic regression model, with f1 score as our primary
 
 After training our model on our full training set, these are the features most positively correlated with Churn:
 
-```{r positive feature importance}
-feature_importance_df <- read_csv("../results/feature_importance.csv")
-
-feature_importance_df |> 
+```{r positive feature importance, echo=FALSE, message=FALSE, fig.align="center"}
+read_csv("../results/feature_importance.csv") |> 
   arrange(desc(Coefficient)) |> 
   head(5) |> 
-  knitr::kable(caption = "Summary of features most positively correlated with Churn") 
+  knitr::kable(caption = "Table 2: Summary of features most positively correlated with Churn") 
 ```
 
 These are the features most negatively correlated with Churn:
 
-```{r}
-feature_importance_df |> 
+```{r, echo=FALSE, message=FALSE, fig.align="center"}
+read_csv("../results/feature_importance.csv") |> 
   arrange(Coefficient) |> 
   head(5) |> 
-  knitr::kable(caption = "Summary of features most negatively correlated with Churn") 
+  knitr::kable(caption = "Table 3: Summary of features most negatively correlated with Churn") 
 ```
 
 On test data our model had satisfactory performance. With consideration to the "Churn" class, our model had an f1 score of \~0.63, a recall score of \~0.82, and a precision score of 0.51.
 
-```{r}
+```{r, echo=FALSE, message=FALSE, fig.align="center"}
 classification_report_df <- read_csv("../results/classification_report.csv")
 
-classification_report_df |> knitr::kable(caption = "Classification report on test data.")
+classification_report_df |> knitr::kable(caption = "Table 4: Classification Report on Test Data.")
 ```
 
 Given the business problem that our prediction algorithm is trying to solve, it was much more important for us to be able to identify the Churn class correctly (to minimize false negatives). As evidenced by the confusion matrix below, our model made 413 false positives and only 97 false negatives:
 
-```{r confusion matrix echo=FALSE,  out.width = '30%'}
+```{r confusion matrix, echo=FALSE, message=FALSE, fig.cap = "Figure 6: Confusion Matrix", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/confusion_matrix.png")
 ```
 
