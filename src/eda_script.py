@@ -4,13 +4,14 @@
 '''
 Performs exploratory data analysis on the Telco Churn data (from hhttps://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv). Saves output figures in .png files.
 
-Usage: src/eda_script.py --input=<input> --out_dir=<out_dir>
-  
+Usage: python src/eda_script.py --input=<input> --out_dir=<out_dir>
+
 Options:
 --input=<input>       Path (including filename) to cleaned data (csv file)
 --out_dir=<out_dir>   Path to directory where the figures should be saved
 '''
 
+# Import libraries
 import pandas as pd
 import altair as alt
 from altair_saver import save
@@ -26,7 +27,7 @@ opt = docopt(__doc__)
 
 def main(input, out_dir):
 
-    # read data and convert class to pandas df
+    # Read data and convert class to pandas df
     train_df = pd.read_csv(input)
 
     # Data Wrangling
@@ -50,8 +51,6 @@ def main(input, out_dir):
                                         'PaymentMethod': 'Payment Method'})
 
     # Analysing class imbalance for target variable
-    churn_dist_df = pd.DataFrame(round(train_df["Churn"].value_counts(normalize=True), 2))
-
     target_class_imbalance = alt.Chart(train_df, title='Class imbalance').mark_bar(opacity=0.6).encode(
                                     alt.X('Churn:N'),
                                     alt.Y('count()', title='Count'),
@@ -77,8 +76,6 @@ def main(input, out_dir):
                             ).repeat(
                                 ['Tenure', 'Monthly Charges', 'Total Charges']
                             )
-    
-    numeric_feat_pairplot = sns.pairplot(train_df)
 
     cor = train_df.corr()
     plt.figure(figsize=(10, 10))
@@ -95,19 +92,6 @@ def main(input, out_dir):
         tmp['Categories'] = int(train_cat[c].nunique())
         tmp['Missing values'] = train_cat[c].isnull().sum()
         catfeatures_stats = catfeatures_stats.append(tmp)
-
-    cat_feat_dist = alt.Chart(train_df).mark_bar().encode(
-                         alt.Y(alt.repeat(), type='nominal'),
-                         x='count()',
-                    ).properties(
-                         width=130, height=80
-                    ).repeat(
-                        ['Senior Citizen', 'Partner', 'Dependents', 'Phone Service',
-                         'Multiple Lines', 'Internet Service', 'Online Security', 'Online Backup',
-                         'Device Protection', 'Tech Support', 'Streaming TV', 'Streaming Movies',
-                         'Contract', 'Paperless Billing', 'Payment Method'],
-                        columns=3
-                    )
 
     cat_feat_churn_dist = alt.Chart(train_df).mark_bar().encode(
                             alt.X('count()', title='Count'),
@@ -135,17 +119,15 @@ def main(input, out_dir):
                     )
 
     # Saving all outputs
-    dfi.export(churn_dist_df, f"{out_dir}/table_1_churn_dist.png", table_conversion='latex')
-    dfi.export(catfeatures_stats, f"{out_dir}/table_2_cat_unique_values.png", table_conversion='latex')
-    target_class_imbalance.save(f"{out_dir}/figure_1_class_imbalance.png", scale_factor=3)
-    numeric_feat_dist.save(f"{out_dir}/figure_2_numeric_feat_dist.png", scale_factor=3)
+    dfi.export(catfeatures_stats, f"{out_dir}/table_1_cat_unique_values.png", table_conversion='latex')
+    #target_class_imbalance.save(f"{out_dir}/figure_1_class_imbalance.png", scale_factor=3)
+    #numeric_feat_dist.save(f"{out_dir}/figure_2_numeric_feat_dist.png", scale_factor=3)
     numeric_feat_corr.figure.savefig(f"{out_dir}/figure_3_numeric_feat_corr.png", scale_factor=3)
-    numeric_feat_pairplot.figure.savefig(f"{out_dir}/figure_4_numeric_feat_pairplot.png")
-    cat_feat_dist.save(f"{out_dir}/figure_5_cat_feat_dist.png", scale_factor=3)
-    cat_feat_churn_dist.save(f"{out_dir}/figure_6_cat_feat_churn_dist.png", scale_factor=3)
-    cat_feat_2dhist.save(f"{out_dir}/figure_7_cat_feat_2dhist.png", scale_factor=3)
+    #cat_feat_churn_dist.save(f"{out_dir}/figure_4_cat_feat_churn_dist.png", scale_factor=3)
+    #cat_feat_2dhist.save(f"{out_dir}/figure_5_cat_feat_2dhist.png", scale_factor=3)
 
     print("EDA reports successfully stored in: ", (out_dir))
+
 
 if __name__ == "__main__":
     # Call main method, and have the user input file, out dir
