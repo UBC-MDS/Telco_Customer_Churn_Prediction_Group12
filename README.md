@@ -46,7 +46,7 @@ Rscript -e "rmarkdown::render('doc/Telco_Customer_Churn_Prediction_Report.Rmd', 
 ## Environment
 
 The project environment can be found
-[here](https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12/blob/main/env_telco_churn.yaml)
+[here](https://github.com/adammorphy/Telco_Customer_Churn_Prediction_Group12/blob/main/env_telco_churn.yaml)
 
 The environment can be created via
 `conda env create --file env_telco_churn.yaml`
