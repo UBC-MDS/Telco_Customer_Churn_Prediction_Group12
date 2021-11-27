@@ -28,7 +28,7 @@ To replicate the analysis, clone this GitHub repository, install the dependencie
 python src/data_download.py --file_path=https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv --out_type=csv  --out_file=../data/raw/IBM-Telco-Customer-Churn.csv
 
 # run eda report
-jupyter-notebook src/telco_churn_eda.ipynb.ipynb
+jupyter-notebook src/eda_notebook.ipynb
 
 # pre-process data 
 python src/pre_process_script.py --input=../data/raw/IBM-Telco-Customer-Churn.csv --out_dir=data/processed/
@@ -77,3 +77,25 @@ Deactivate the environment via
     + tidyverse==1.2.1
 
 ## References
+
+de Jonge, Edwin. 2020. Docopt: Command-Line Interface Specification Language. https://CRAN.R-project.org/package=docopt.
+
+Harris, Charles R., K. Jarrod Millman, Stéfan J van der Walt, Ralf Gommers, Pauli Virtanen, David Cournapeau, Eric Wieser, et al. 2020. “Array Programming with NumPy.” Nature 585: 357–62. https://doi.org/10.1038/s41586-020-2649-2.
+
+Hunter, John D. 2007. “Matplotlib: A 2d Graphics Environment.” Computing in Science & Engineering 9 (3): 90–95.
+
+Pedregosa, F., G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, et al. 2011. “Scikit-Learn: Machine Learning in Python.” Journal of Machine Learning Research 12: 2825–30.
+
+Pustokhina, Irina V, Denis A Pustokhin, Phong Thanh Nguyen, Mohamed Elhoseny, and K Shankar. 2021. “Multi-Objective Rain Optimization Algorithm with WELM Model for Customer Churn Prediction in Telecommunication Sector.” Complex & Intelligent Systems, 1–13.
+
+Team, The pandas development. 2020. Pandas-Dev/Pandas: Pandas (version latest). Zenodo. https://doi.org/10.5281/zenodo.3509134.
+
+Team, OmniSci. 2020. “Strategies for Reducing Churn Rate in the Telecom Industry.” RSS. https://www.omnisci.com/blog/strategies-for-reducing-churn-rate-in-the-telecom-industry.
+
+Van Rossum, Guido, and Fred L. Drake. 2009. Python 3 Reference Manual. Scotts Valley, CA: CreateSpace.
+
+VanderPlas, Jacob, Brian Granger, Jeffrey Heer, Dominik Moritz, Kanit Wongsuphasawat, Arvind Satyanarayan, Eitan Lees, Ilia Timofeev, Ben Welsh, and Scott Sievert. 2018. “Altair: Interactive Statistical Visualizations for Python.” Journal of Open Source Software 3 (32): 1057.
+
+Wickham, Hadley. 2017. Tidyverse: Easily Install and Load the ’Tidyverse’. https://CRAN.R-project.org/package=tidyverse.
+
+Xie, Yihui. 2014. “Knitr: A Comprehensive Tool for Reproducible Research in R.” In Implementing Reproducible Computational Research, edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman; Hall/CRC. http://www.crcpress.com/product/isbn/9781466561595.
