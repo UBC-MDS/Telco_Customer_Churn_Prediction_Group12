@@ -18,7 +18,7 @@ library(tidyverse)
 
 # Summary
 
-In this project, we attempt to examine the following question: Consider certain telecommunications customer characteristics, predict the likelihood that a given customer is likely to churn, and further understand what customer characteristics are positively associated with high churn risk. We performed a analysis, which yield the
+In this project, we attempt to examine the following question: Consider certain telecommunications customer characteristics, predict the likelihood that a given customer is likely to churn, and further understand what customer characteristics are positively associated with high churn risk. The dataset we are using comes from the public IBM github page, and is made available as part of an effort (by IBM) to teach the public how to use some of their machine learning tools. We used a logistic regression algorithm to build a classification model to predict which customers are likely to churn from their telecommunications company. Additionally, we reported which features are most positively & negatively correlated with our target, as learned by our model. On test data our model had satisfactory performance. With consideration to the "Churn" class, our model had an f1 score of \~0.63, a recall score of \~0.82, and a precision score of 0.51. The features most positively correlated with Churn include high monthly charges, month to month contracts, and fiber optic internet service. The features most negatively correlated with Churn include tenure, two year contracts, and DSL internet service.
 
 # Introduction
 
@@ -76,7 +76,7 @@ We used a logistic regression algorithm to build a classification model to predi
 
 # Results & Discussion
 
-We chose to use a simple logistic regression model, with f1 score as our primary scoring metric . To improve the performance of our model, we performed hyperparameter optimization in the form of an exhaustive grid search, with 4 cross validation folds, over hyperparameters `C` & `class_weight`. This yielded optimal parameters `C=0.01` & `class_weight="balanced"`
+We chose to use a simple logistic regression model, with f1 score as our primary scoring metric. To improve the performance of our model, we performed hyper parameter optimization in the form of an exhaustive grid search, with 4 cross validation folds, over hyper parameters `C` & `class_weight`. This yielded optimal parameters `C=0.01` & `class_weight="balanced"`
 
 After training our model on our full training set, these are the features most positively correlated with Churn:
 
