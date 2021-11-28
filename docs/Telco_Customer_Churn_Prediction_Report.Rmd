@@ -41,7 +41,7 @@ We are also dropping `gender` from the data frame due to ethical limitations of 
 ## Analysis
 
 We did exploratory data analysis (EDA) on the training data to get an preliminary understanding of the input features. We first looked at the distribution of target  (`Churn`) class to understand class imbalanced.
-```{r class imbalance, echo=FALSE, fig.cap = "Figure 1: Class Imbalance", out.width = '60%', fig.align="center"}
+```{r class imbalance, echo=FALSE, fig.cap = "Figure 1: Class Imbalance", out.width = '40%', fig.align="center"}
 knitr::include_graphics("../results/figure_1_class_imbalance.png")
 ```
 
@@ -72,7 +72,7 @@ We further observed the distribution of categorical features pertaining to Telec
 knitr::include_graphics("../results/figure_5_cat_feat_2dhist.png")
 ```
 
-We used a logistic regression algorithm to build a classification model to predict which customers are likely to churn from their telecommunications company. Additionally, we reported which features are most positively & negatively correlated with our target, as learned by our model. We used the Python language[@Python] and the following Python packages were used to perform this analysis: docopt [@docopt], os [@Python], scikit-learn [@scikit-learn], Pandas [@reback2020pandas], Numpy Array[@2020NumPy-Array], matplotlib [@hunter2007matplotlib]and altair [@vanderplas2018altair]. We used the R language[@python] and the following R packages were used to perform this analysis: knitr [@knitr], tidyverse [@tidyverse]. Our code for the analysis and our related resources and progress reports can be found here: (<https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12>)
+We used a logistic regression algorithm to build a classification model to predict which customers are likely to churn from their telecommunications company. Additionally, we reported which features are most positively & negatively correlated with our target, as learned by our model. We used the Python language[@Python] and the following Python packages were used to perform this analysis: docopt [@docopt], os [@Python], scikit-learn [@scikit-learn], Pandas [@reback2020pandas], Numpy Array[@2020NumPy-Array], matplotlib [@hunter2007matplotlib]and altair [@vanderplas2018altair]. We used the R language[@R] and the following R packages were used to perform this analysis: knitr [@knitr], tidyverse [@tidyverse]. Our code for the analysis and our related resources and progress reports can be found here: (<https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12>)
 
 # Results & Discussion
 
