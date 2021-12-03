@@ -19,6 +19,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import dataframe_image as dfi
 from docopt import docopt
+import os
 
 alt.renderers.enable('mimetype')
 
@@ -26,6 +27,13 @@ opt = docopt(__doc__)
 
 
 def main(input, out_dir):
+
+       # Ensure output directory exists
+    if not os.path.exists(out_dir):
+        try:
+            os.makedirs(out_dir)
+        except:
+            print("Wasn't able to create output directory. Check permissions.")
 
     # Read data and convert class to pandas df
     train_df = pd.read_csv(input)
@@ -119,12 +127,12 @@ def main(input, out_dir):
                     )
 
     # Saving all outputs
-    dfi.export(catfeatures_stats, f"{out_dir}/table_1_cat_unique_values.png", table_conversion='latex')
-    target_class_imbalance.save(f"{out_dir}/figure_1_class_imbalance.png", scale_factor=3)
-    numeric_feat_dist.save(f"{out_dir}/figure_2_numeric_feat_dist.png", scale_factor=3)
-    numeric_feat_corr.figure.savefig(f"{out_dir}/figure_3_numeric_feat_corr.png", scale_factor=3)
-    cat_feat_churn_dist.save(f"{out_dir}/figure_4_cat_feat_churn_dist.png", scale_factor=3)
-    cat_feat_2dhist.save(f"{out_dir}/figure_5_cat_feat_2dhist.png", scale_factor=3)
+    dfi.export(catfeatures_stats, f"{out_dir}table_1_cat_unique_values.png", table_conversion='latex')
+    target_class_imbalance.save(f"{out_dir}figure_1_class_imbalance.png", scale_factor=3)
+    numeric_feat_dist.save(f"{out_dir}figure_2_numeric_feat_dist.png", scale_factor=3)
+    numeric_feat_corr.figure.savefig(f"{out_dir}figure_3_numeric_feat_corr.png", scale_factor=3)
+    cat_feat_churn_dist.save(f"{out_dir}figure_4_cat_feat_churn_dist.png", scale_factor=3)
+    cat_feat_2dhist.save(f"{out_dir}figure_5_cat_feat_2dhist.png", scale_factor=3)
 
     print("EDA reports successfully stored in: ", (out_dir))
 
