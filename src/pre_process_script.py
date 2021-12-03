@@ -29,6 +29,13 @@ opt = docopt(__doc__)
 	
 def main(input, out_dir):
 
+    # Ensure output directory exists
+    if not os.path.exists(out_dir):
+        try:
+            os.makedirs(out_dir)
+        except:
+            print("Wasn't able to create output directory. Check permissions.")
+            
     # read data and convert class to pandas df
     raw_data = pd.read_csv(input) 
 
