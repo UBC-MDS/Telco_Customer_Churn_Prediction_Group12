@@ -53,25 +53,25 @@ For numerical variables, we looked into the distribution of these features for t
 knitr::include_graphics("../results/figure_2_numeric_feat_dist.png")
 ```
 
-We also analyzed the correlation between the three numerical features. Here, it was observed that there is high positive correlation between `Tenure` and `Total Charges`. The correlation between numeric features is an important consideration while interpreting the model. In case, any two features are highly correlated, we may have to merge them together or drop one of them to improve model performance.
+We also analyzed the correlation between the three numerical features. Here, it was observed that there is high positive correlation between `Tenure` and `Total Charges`. The correlation between numeric features is an important consideration while interpreting the model. In case, any two features are highly correlated, we may have to merge them together or drop one of them to improve model performance. This correlation is represented using a heat-map, which gives correlation values and color codes.
 
 ```{r numerical features correlation, echo=FALSE, fig.cap = "Figure 3: Numerical Features Correlation", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/figure_3_numeric_feat_corr.png")
 ```
 
-We further analysed the significance of categorical features in predicting the target class. A summary of categorical feature classes is given below:
+We further analysed the significance of categorical features in predicting the target class. A list of all categorical features along with the possible class values is given below for reference:
 
 ```{r categorical features summary, echo=FALSE, fig.cap = "Table 1: Categorical Features Summary", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/table_1_cat_unique_values.png")
 ```
 
-We observed the distribution of categorical features pertaining to demographics. It was noted that people with no dependents, no partner and senior citizens had a higher Churn.
+We observed the distribution of categorical features pertaining to demographics. From the bar charts, we can pick out the categories which have a higher ratio of positive class (Churn="True"). It can be observed that people with no dependents, no partner and senior citizens had a higher Churn.
 
 ```{r categorical demographic features, echo=FALSE, fig.cap = "Figure 4: Categorical Demographic Features", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/figure_4_cat_feat_churn_dist.png")
 ```
 
-We further observed the distribution of categorical features pertaining to Telecom Company services. It was noted that the following categories have higher Churn: Internet Service (Fiber Optic service), Contract (Monthly), Online Security (No), Online Backup (No), Payment Method (Electronic Check), Paperless Billing (Yes), Tech Support (No), Device Protection (No). It was also noted the for the following features, customer churn was equally distributed across all categories: Multiple Lines, Streaming Movies, Streaming TV.
+We further observed the distribution of categorical features pertaining to Telecom Company services. For this, we used 2D histograms. In these plots, we observed the categories for which there were higher number of positive classes (Churn = "True"). It was noted that for various features, the following categories have higher Churn rate: Internet Service (Fiber Optic service), Contract (Monthly), Online Security (No), Online Backup (No), Payment Method (Electronic Check), Paperless Billing (Yes), Tech Support (No), Device Protection (No). It was also noted the for the following features, customer churn was equally distributed across all categories: Multiple Lines, Streaming Movies, Streaming TV.
 
 ```{r categorical service features, echo=FALSE, fig.cap = "Figure 5: Categorical Service Features", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/figure_5_cat_feat_2dhist.png")
