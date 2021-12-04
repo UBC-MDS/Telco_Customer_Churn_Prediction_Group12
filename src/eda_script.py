@@ -126,6 +126,15 @@ def main(input, out_dir):
                             columns=3
                     )
 
+    # Test that Figure object have been created
+
+    test_figs(target_class_imbalance)
+    test_figs(numeric_feat_corr)
+    test_figs(cat_feat_churn_dist)
+    test_figs(cat_feat_2dhist)
+    test_figs(numeric_feat_dist)
+
+
     # Saving all outputs
     dfi.export(catfeatures_stats, f"{out_dir}table_1_cat_unique_values.png", table_conversion='latex')
     target_class_imbalance.save(f"{out_dir}figure_1_class_imbalance.png", scale_factor=3)
@@ -135,6 +144,11 @@ def main(input, out_dir):
     cat_feat_2dhist.save(f"{out_dir}figure_5_cat_feat_2dhist.png", scale_factor=3)
 
     print("EDA reports successfully stored in: ", (out_dir))
+
+
+def test_figs(fig):
+    
+    assert fig != None, "Output figure is empty"
 
 
 if __name__ == "__main__":

@@ -1,10 +1,11 @@
 # Telco Customer Churn Predictor
 
-- Contributors: Zihan Zhou, Anupriya Srivastava, Adam Morphy, Jordan Casoli 
+- Contributors: Adam Morphy, Anupriya Srivastava, Jordan Casoli, Zihan Zhou
 
 ## About
 
-For this project we are trying to answer the following question: given certain telecommunications customer characteristics, is a given customer likely to churn? A natural follow up question that we will also be addressing is: what customer characteristics are positively associated with high churn risk? Understanding the answers to these questions will provide actionable insights to telecommunications companies, allowing them to keep their customers for longer periods of time. Ultimately this will lead to higher customer lifetime value.
+For this project we are trying to answer the following question: given certain telecommunications customer characteristics, is a given customer likely to churn? A natural follow up question that we will also be addressing is: what customer characteristics are positively associated with high churn risk? Understanding the answers to these questions will provide actionable insights to telecommunications companies, allowing them to keep their customers for longer periods of time. Ultimately this will lead to higher customer lifetime value. In our project, we are identifying a predictive classification model that can provide insights into which customers (based on their traits) are at higher risk of churning. Answering this question has important practical managerial implications for telecommunication companies because it is a crucial step in understanding how to reduce this risk and thus create higher customer lifetime value. Further, this predictive tool will be considered a contribution to the modern telecommunication customer relationship management systems.
+
 
 The dataset we are using comes from the public IBM github page, and is made available as part of an effort (by IBM) to teach the public how to use some of their machine learning tools. Unfortunately no mention is made of exactly how the data was collected, or who was responsible for the collection. Here is a link to the [mini-course](https://developer.ibm.com/patterns/predict-customer-churn-using-watson-studio-and-jupyter-notebooks/) that references the dataset we are using. The raw data is [here](https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv), and lives inside the data folder of the [public repository](https://github.com/IBM/telco-customer-churn-on-icp4d) for the mini-course. Each row in the dataset corresponds to a single customer. There are 19 feature columns, along with the target column, “churn”.
 
@@ -17,7 +18,7 @@ We will perform hyperparameter optimization, and then fit the best model on our 
 ## Report
 
 The final report can be found 
-[here](https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12/blob/main/docs/Telco_Customer_Churn_Prediction_Report.Rmd)
+[here](http://htmlpreview.github.io/?https://github.com/adammorphy/Telco_Customer_Churn_Prediction_Group12/blob/main/docs/Telco_Customer_Churn_Prediction_Report.html)
 
 ## Usage
 
@@ -43,6 +44,17 @@ python src/analysis.py --train_path="data/processed/train_df.csv" --test_path="d
 Rscript -e "rmarkdown::render('docs/Telco_Customer_Churn_Prediction_Report.Rmd', output_format = 'github_document')"
 ```
 
+Alternatively, run the following command at the command line/terminal from the root directory of this project:
+
+```
+make all
+```
+
+To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
+```
+make clean
+```
+
 ## Environment
 
 The project environment can be found
@@ -55,7 +67,7 @@ Activate the environment via
 `conda activate telco`
 
 Deactivate the environment via
-`conda activate telco`
+`conda deactivate`
 
 **Windows Users**: You may have to run this command to make the `altair` and `altair_server`
 run as expected
@@ -79,6 +91,9 @@ run as expected
 - R version 4.1.1 and R packages:
     + knitr==1.26
     + tidyverse==1.2.1
+
+## License
+The Telco Customer Churn Predictor materials here are licensed under the MIT License. If you use or re-mix this project please provide attribution and a link to this GitHub repository.
 
 ## References
 

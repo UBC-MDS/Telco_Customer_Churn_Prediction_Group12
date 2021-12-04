@@ -13,6 +13,7 @@ Options:
 '''
 
 import os
+import requests
 import pandas as pd
 import numpy as np
 from docopt import docopt
@@ -35,6 +36,12 @@ feature_importance_filename = "feature_importance.csv"
 
 def main(train_path, test_path, out_dir):
 
+
+    X_train = None
+    y_train = None
+    X_test = None
+    y_test = None
+
     # Read train & test data
     try:
         train_df = pd.read_csv(train_path)
@@ -51,6 +58,19 @@ def main(train_path, test_path, out_dir):
     
     # Split into features/targets
     X_train, y_train, X_test, y_test = split_feature_targets(train_df, test_df)
+
+    # Tests for data
+    test_empty(X_train)
+    test_empty(X_test)
+    test_empty(y_train)
+    test_empty(y_test)
+
+    test_columns(X_test)
+    test_columns(X_test)
+
+    test_columns_y(y_test)
+    test_columns_y(y_train)
+
 
     # Build Preprocessor
     numeric_features = ['MonthlyCharges', 'tenure', 'TotalCharges']
@@ -120,6 +140,13 @@ def main(train_path, test_path, out_dir):
 
     class_report_df.to_csv(os.path.join(out_dir, class_report_name))
 
+
+    #Testing if results DataFrames are empty
+    test_results_empty(class_report_df)
+    test_results_empty(feature_imp_df)
+    
+
+
     # Generate confusion matrix
     cm = ConfusionMatrixDisplay.from_estimator(
         best_lr_pipe, X_test, y_test, values_format="d", display_labels=["Non Churn", "Churn"]
@@ -164,6 +191,27 @@ def build_preprocessor(numeric_features, categorical_features):
     )
 
     return preprocessor
+
+
+# Testing Functions
+def test_empty(data):
+    
+    assert data.empty == False, "Data file path/URL is incorrect"
+
+def test_columns(data):
+    
+    assert data.columns[0] != 'customerID', "Data columns are incorrect, customerID should be dropped"
+    assert data.columns[0] != 'gender', "Data columns are incorrect, gender should be dropped"
+    assert data.columns[0] == 'SeniorCitizen', "Data columns are incorrect"
+    assert data.columns[1] == 'Partner', "Data columns are incorrect"
+
+def test_columns_y(data):
+    
+    assert data.name == 'Churn', "Target column is incorrect" 
+
+def test_results_empty(data):
+    
+    assert data.empty == False, "Results DataFrame is Empty" 
 
 if __name__ == "__main__":
     
