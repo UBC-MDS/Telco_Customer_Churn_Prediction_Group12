@@ -1,6 +1,6 @@
 # Telco Customer Churn Predictor
 
-- Contributors: Adam Morphy, Anupriya Srivastava, Jordan Casoli, Zihan Zhou,
+- Contributors: Adam Morphy, Anupriya Srivastava, Jordan Casoli, Zihan Zhou
 
 ## About
 
@@ -87,6 +87,9 @@ Deactivate the environment via
 - R version 4.1.1 and R packages:
     + knitr==1.26
     + tidyverse==1.2.1
+
+## License
+The Motor Vehicle Collision Fatality Predictor materials here are licensed under the MIT License. If you use or re-mix this project please provide attribution and a link to this GitHub repository.
 
 ## References
 
