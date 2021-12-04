@@ -39,7 +39,7 @@ We are also dropping `gender` from the data frame due to ethical limitations of 
 
 ## Analysis
 
-We did exploratory data analysis (EDA) on the training data to get an preliminary understanding of the input features. We first looked at the distribution of target (`Churn`) class to understand class imbalanced.
+We did exploratory data analysis (EDA) on the training data to get a preliminary understanding of the input features. We first looked at the distribution of target (`Churn`) class to understand class imbalanced. From the plot below, it is clear that there is imbalance in the target variable as about 75% observations below to the negative class (Churn = "False").
 
 ```{r class imbalance, echo=FALSE, fig.cap = "Figure 1: Class Imbalance", out.width = '40%', fig.align="center"}
 knitr::include_graphics("../results/figure_1_class_imbalance.png")
@@ -47,13 +47,13 @@ knitr::include_graphics("../results/figure_1_class_imbalance.png")
 
 We then segregated the features as numerical and categorical exploratory variables. The input data has 3 numerical and 12 categorical features.
 
-For numerical variables, we looked into the distribution of these features for the two target classes. It was observed that `Tenure` is an important feature for giving split between the two target classes.
+For numerical variables, we looked into the distribution of these features for the two target classes. It was observed that `Tenure` shows split between the two target classes, where as the other two features `Monthly Charges` and `Total Charges` do not provide a clear bifurcation between th two classes. Hence, `Tenure` feature seems to be important where as `Monthly Charges` and `Total Charges` do not look too important.
 
 ```{r numerical features distribution, echo=FALSE, fig.cap = "Figure 2: Numerical Features Distribution", out.width = '100%', fig.align="center"}
 knitr::include_graphics("../results/figure_2_numeric_feat_dist.png")
 ```
 
-We also analyzed the correlation between the three numerical features. Here, it was observed that there is high positive correlation between `Tenure` and `Total Charges`
+We also analyzed the correlation between the three numerical features. Here, it was observed that there is high positive correlation between `Tenure` and `Total Charges`. The correlation between numeric features is an important consideration while interpreting the model. In case, any two features are highly correlated, we may have to merge them together or drop one of them to improve model performance.
 
 ```{r numerical features correlation, echo=FALSE, fig.cap = "Figure 3: Numerical Features Correlation", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/figure_3_numeric_feat_corr.png")
