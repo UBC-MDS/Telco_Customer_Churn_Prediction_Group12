@@ -32,12 +32,15 @@ def main(file_path, out_type, out_file):
         print(req)
 
     # read in data and test it
-    data = 1
+    data = None
     data = pd.read_csv(file_path)
 
-    test_path(data.info())
 
+    # Tests for raw data
+    test_path(data)
+    test_columns(data)
 
+    # Create new file path if it doesn't exist
     if out_type == "csv":
         try:
             data.to_csv(out_file, index = False)
@@ -47,8 +50,18 @@ def main(file_path, out_type, out_file):
 
   
 def test_path(data):
+
+    assert data.empty == False, "Data file path/URL is incorrect"
+
+def test_columns(data):
     
-    assert data != 1, "Data file path/URL is incorrect"
+    assert data.columns[0] == 'customerID', "Data columns are incorrect"
+    assert data.columns[1] == 'gender', "Data columns are incorrect"
+    assert data.columns[2] == 'SeniorCitizen', "Data columns are incorrect"
+    assert data.columns[3] == 'Partner', "Data columns are incorrect"
+
+    assert data.columns[20] == 'Churn', "Target column is incorrect" 
+    
 
   
 if __name__ == "__main__":

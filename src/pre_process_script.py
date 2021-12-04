@@ -66,6 +66,14 @@ def main(input, out_dir):
     # split into training and test data sets
     train_df, test_df = train_test_split(raw_data, test_size=0.3, random_state=1)
 
+    # Test the new dataframe
+
+    test_empty(train_df)
+    test_empty(test_df)
+
+    test_columns(train_df)
+    test_columns(test_df)
+    
   
     # write training and test data to csv files
     train_df.to_csv((out_dir + 'train_df.csv'), index = False)
@@ -73,6 +81,18 @@ def main(input, out_dir):
 
     print("Data successfully stored in: ", (out_dir + 'train_df.csv'), " and ", (out_dir + 'train_df.csv'))
 
+
+# Testing Functions
+def test_empty(data):
+    
+    assert data.empty == False, "Data file path/URL is incorrect"
+
+def test_columns(data):
+    
+    assert data.columns[0] != 'customerID', "Data columns are incorrect, customerID should be dropped"
+    assert data.columns[0] != 'gender', "Data columns are incorrect, gender should be dropped"
+    assert data.columns[0] == 'SeniorCitizen', "Data columns are incorrect"
+    assert data.columns[1] == 'Partner', "Data columns are incorrect"
 
 if __name__ == "__main__":
     
