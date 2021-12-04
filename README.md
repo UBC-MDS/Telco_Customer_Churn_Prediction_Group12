@@ -57,6 +57,10 @@ Activate the environment via
 Deactivate the environment via
 `conda activate telco`
 
+**Windows Users**: You may have to run this command to make the `altair` and `altair_server`
+run as expected
+`npm install -g vega vega-cli vega-lite canvas`
+
 ## Dependancies
 
 * Python 3.9.7 and Python packages:
