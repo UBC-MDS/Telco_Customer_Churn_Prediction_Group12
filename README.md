@@ -43,6 +43,14 @@ python src/analysis.py --train_path="data/processed/train_df.csv" --test_path="d
 Rscript -e "rmarkdown::render('docs/Telco_Customer_Churn_Prediction_Report.Rmd', output_format = 'github_document')"
 ```
 
+Alternatively, run the following command at the command line/terminal from the root directory of this project:
+
+`make all`
+
+To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
+
+`make clean`
+
 ## Environment
 
 The project environment can be found
@@ -55,7 +63,7 @@ Activate the environment via
 `conda activate telco`
 
 Deactivate the environment via
-`conda activate telco`
+`conda deactivate`
 
 ## Dependancies
 
