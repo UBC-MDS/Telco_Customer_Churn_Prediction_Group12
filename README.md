@@ -17,7 +17,7 @@ We will perform hyperparameter optimization, and then fit the best model on our 
 ## Report
 
 The final report can be found 
-[here](https://github.com/UBC-MDS/Telco_Customer_Churn_Prediction_Group12/blob/main/docs/Telco_Customer_Churn_Prediction_Report.Rmd)
+[here](http://htmlpreview.github.io/?https://github.com/adammorphy/Telco_Customer_Churn_Prediction_Group12/blob/main/docs/Telco_Customer_Churn_Prediction_Report.html)
 
 ## Usage
 
