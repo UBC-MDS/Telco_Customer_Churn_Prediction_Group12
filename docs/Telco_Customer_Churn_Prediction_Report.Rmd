@@ -17,7 +17,7 @@ library(tidyverse)
 
 # Summary
 
-In this project, we attempt to examine the following question: Consider certain telecommunications customer characteristics, predict the likelihood that a given customer is likely to churn, and further understand what customer characteristics are positively associated with high churn risk. The dataset we are using comes from the public IBM github page, and is made available as part of an effort (by IBM) to teach the public how to use some of their machine learning tools. We used a logistic regression algorithm to build a classification model to predict which customers are likely to churn from their telecommunications company. Additionally, we reported which features are most positively & negatively correlated with our target, as learned by our model. On test data our model had satisfactory performance. With consideration to the "Churn" class, our model had an f1 score of \~0.63, a recall score of \~0.82, and a precision score of 0.51. The features most positively correlated with Churn include high monthly charges, month to month contracts, and fiber optic internet service. The features most negatively correlated with Churn include tenure, two year contracts, and DSL internet service.
+In this project, we attempt to examine the following question: Can we construct a machine learning model which predicts telecommunications customer churn likelihood given obtainable customer characteristics? Further, can we identify what characteristics are most important in predicting this churn risk? We used a logistic regression algorithm to build a classification model to predict which customers are likely to churn from their telecommunications company. On test data our model had satisfactory performance. With consideration to the "Churn" class, our model had an f1 score of \~0.63, a recall score of \~0.82, and a precision score of 0.51. Even though our model had a pretty good recall score, it needs more optimization before it would be ready to deploy, as our precision score was too low to be practical. The features most positively correlated with Churn include high monthly charges, month to month contracts, and fiber optic internet service. The features most negatively correlated with Churn include tenure, two year contracts, and DSL internet service.
 
 # Introduction
 
@@ -83,7 +83,7 @@ We used a logistic regression algorithm to build a classification model to predi
 
 # Results & Discussion
 
-We chose to use a simple logistic regression model, with f1 score as our primary scoring metric. To improve the performance of our model, we performed hyper parameter optimization in the form of an exhaustive grid search, with 4 cross validation folds, over hyper parameters `C` & `class_weight`. This yielded optimal parameters `C=0.01` & `class_weight="balanced"`
+We chose to use a simple logistic regression model, with f1 score as our primary scoring metric. We decided to use a logistic regression model over other models such as `DecisionTree` or `RandomForest` primarily because of our familiarity with the algorithm, and because it is convenient to pull feature importance's from the fit model. We realized that this may not be optimal, and make note of this in our "Limitations & Future" section at the bottom of the report. To improve the performance of our model, we performed hyper parameter optimization in the form of an exhaustive grid search, with 4 cross validation folds, over hyper parameters `C` & `class_weight`. This yielded optimal parameters `C=0.01` & `class_weight="balanced"`
 
 After training our model on our full training set, these are the features most positively correlated with Churn:
 
@@ -103,6 +103,8 @@ read_csv("../results/feature_importance.csv") |>
   knitr::kable(caption = "Table 3: Summary of features most negatively correlated with Churn") 
 ```
 
+These feature importance's make sense intuitively, as customers on month-to-month contracts are much more likely to churn than customers on two year contracts. One surprising result is that customers with fibre optic internet service are much more likely to churn than customers with DSL internet service.
+
 On test data our model had satisfactory performance. With consideration to the "Churn" class, our model had an f1 score of \~0.63, a recall score of \~0.82, and a precision score of 0.51.
 
 ```{r, echo=FALSE, message=FALSE, fig.align="center"}
@@ -111,11 +113,13 @@ classification_report_df <- read_csv("../results/classification_report.csv")
 classification_report_df |> knitr::kable(caption = "Table 4: Classification Report on Test Data.")
 ```
 
-Given the business problem that our prediction algorithm is trying to solve, it was much more important for us to be able to identify the Churn class correctly (to minimize false negatives). As evidenced by the confusion matrix below, our model made 413 false positives and only 97 false negatives:
+Given the business problem that our prediction algorithm is trying to solve, it was more important for us to be able to identify the Churn class correctly (to minimize false negatives). As evidenced by the confusion matrix below, our model made 413 false positives and only 97 false negatives:
 
 ```{r confusion matrix, echo=FALSE, message=FALSE, fig.cap = "Figure 6: Confusion Matrix", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/confusion_matrix.png")
 ```
+
+While we are happy with the recall score of \~0.82, the lack of precision in our model means that further work should be done to optimize the model before we can recommend deploying it.
 
 # Limitations & Future
 
