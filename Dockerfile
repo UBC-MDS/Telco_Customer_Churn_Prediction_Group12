@@ -6,6 +6,8 @@ FROM rocker/tidyverse
 # install python
 RUN apt-get update && apt-get install -y python3 python3-pip
 
+# install libxt6
+RUN apt-get install -y --no-install-recommends libxt6
 
 # install the kableExtra package using install.packages
 RUN Rscript -e "install.packages('kableExtra')"
