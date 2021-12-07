@@ -42,7 +42,7 @@ RUN conda install docopt \
 # Install packages need for saving plots properly
 RUN conda install -c conda-forge vega-cli vega-lite-cli
 
-RUN pip install chromedriver-py
+#RUN pip install chromedriver-py
 
 RUN pip install dataframe_image
 
@@ -50,4 +50,4 @@ RUN pip install altair-saver
 
 RUN pip install lxml
 
-RUN pip install selenium
+#RUN pip install selenium
