@@ -30,12 +30,12 @@ There are two suggested ways to run this analysis:
 
 To replicate the analysis, install [Docker](https://www.docker.com/get-started). Then clone this GitHub repository and run the following command at the command line/terminal from the root directory of this project:
 ```
-docker run --rm -v /$(pwd):/home/rstudio/telco_churn_predictor adammorphy/telco_churn_docker:v2.0 make -C /home/rstudio/telco_churn_predictor all
+docker run --rm -v /$(pwd):/home/rstudio/telco_churn_predictor adammorphy/telco_churn_docker:latest make -C /home/rstudio/telco_churn_predictor all
 ```
 
 To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
 ```
-docker run --rm -v /$(pwd):/home/rstudio/telco_churn_predictor adammorphy/telco_churn_docker:v2.0 make -C /home/rstudio/telco_churn_predictor clean
+docker run --rm -v /$(pwd):/home/rstudio/telco_churn_predictor adammorphy/telco_churn_docker:latest make -C /home/rstudio/telco_churn_predictor clean
 ```
 
 **2. Without Using Docker**
@@ -81,7 +81,6 @@ run as expected
     + altair_saver
     + seaborn==0.8.1
     + jsonschema=3.2.0
-    + chromedriver-py
     + lxml
 - R version 4.1.1 and R packages:
     + knitr==1.26
