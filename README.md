@@ -22,30 +22,25 @@ The final report can be found
 
 ## Usage
 
+There are two suggested ways to run this analysis:
+
+**1. Using Docker**
+
+* note - the instructions in this section also depends on running this in a unix shell (e.g., terminal or Git Bash)
+
+To replicate the analysis, install [Docker](https://www.docker.com/get-started). Then clone this GitHub repository and run the following command at the command line/terminal from the root directory of this project:
+```
+docker run --rm -v /$(pwd):/home/rstudio/telco_churn_predictor adammorphy/telco_churn_docker:latest make -C /home/rstudio/telco_churn_predictor all
+```
+
+To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
+```
+docker run --rm -v /$(pwd):/home/rstudio/telco_churn_predictor adammorphy/telco_churn_docker:latest make -C /home/rstudio/telco_churn_predictor clean
+```
+
+**2. Without Using Docker**
+
 To replicate the analysis, clone this GitHub repository, install the dependencies listed below (or install the given environment yaml file below), and run the following commands at the command line/terminal from the root directory of this project:
-
-```
-# download data
-python src/data_download.py --file_path=https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv --out_type=csv  --out_file=../data/raw/IBM-Telco-Customer-Churn.csv
-
-# run eda report
-jupyter-notebook src/eda_notebook.ipynb
-
-# pre-process data 
-python src/pre_process_script.py --input=../data/raw/IBM-Telco-Customer-Churn.csv --out_dir=data/processed/
-
-# create exploratory data analysis figure and write to file 
-python src/eda_script.py --input=data/processed/train_df.csv --out_dir=results/
-
-# tune and test model
-python src/analysis.py --train_path="data/processed/train_df.csv" --test_path="data/processed/test_df.csv" --out_dir="results/"
-
-# render final report
-Rscript -e "rmarkdown::render('docs/Telco_Customer_Churn_Prediction_Report.Rmd', output_format = 'github_document')"
-```
-
-Alternatively, run the following command at the command line/terminal from the root directory of this project:
-
 ```
 make all
 ```
@@ -86,7 +81,6 @@ run as expected
     + altair_saver
     + seaborn==0.8.1
     + jsonschema=3.2.0
-    + chromedriver-py
     + lxml
 - R version 4.1.1 and R packages:
     + knitr==1.26
