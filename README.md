@@ -29,14 +29,29 @@ There are two suggested ways to run this analysis:
 * note - the instructions in this section also depends on running this in a unix shell (e.g., terminal or Git Bash)
 
 To replicate the analysis, install [Docker](https://www.docker.com/get-started). Then clone this GitHub repository and run the following command at the command line/terminal from the root directory of this project:
+
+**Non Windows Users Command**
 ```
 docker run --rm -v /$(pwd):/home/rstudio/telco_churn_predictor adammorphy/telco_churn_docker:latest make -C /home/rstudio/telco_churn_predictor all
 ```
+**Windows Users Command:** 
+```
+docker run --rm -v /$(pwd)://home//rstudio//telco_churn_predictor adammorphy/telco_churn_docker:latest make -C //home//rstudio//telco_churn_predictor all
+```
 
 To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
+
+**Non Windows Users Command**
 ```
 docker run --rm -v /$(pwd):/home/rstudio/telco_churn_predictor adammorphy/telco_churn_docker:latest make -C /home/rstudio/telco_churn_predictor clean
 ```
+
+**Non Windows Users Command**
+```
+docker run --rm -v /$(pwd)://home//rstudio//telco_churn_predictor adammorphy/telco_churn_docker:latest make -C //home//rstudio//telco_churn_predictor clean
+```
+
+
 
 **2. Without Using Docker**
 
