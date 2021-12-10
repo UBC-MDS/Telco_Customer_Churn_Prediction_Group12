@@ -46,7 +46,7 @@ To reset the repo to a clean state, with no intermediate or results files, run t
 docker run --rm -v /$(pwd):/home/rstudio/telco_churn_predictor adammorphy/telco_churn_docker:latest make -C /home/rstudio/telco_churn_predictor clean
 ```
 
-**Non Windows Users Command**
+**Windows Users Command**
 ```
 docker run --rm -v /$(pwd)://home//rstudio//telco_churn_predictor adammorphy/telco_churn_docker:latest make -C //home//rstudio//telco_churn_predictor clean
 ```
