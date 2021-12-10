@@ -71,6 +71,8 @@ To reset the repo to a clean state, with no intermediate or results files, run t
 make clean
 ```
 
+Below image can demonstrate the dependency diagram for making the report by Makefile
+
 ## Environment
 
 The project environment can be found
