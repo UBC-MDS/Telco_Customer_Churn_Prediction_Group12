@@ -43,7 +43,7 @@ We are also dropping `gender` from the data frame due to ethical limitations of 
 
 As mentioned in the above section, we did preliminary data cleaning, data wrangling, and data splitting in the pre-processing section. This was done to ensure that we do conduct any analysis on the test data. 
 
-We did exploratory data analysis (EDA) on the training data to get a preliminary understanding of the input features. We first looked at the distribution of target (`Churn`) class to understand class imbalanced. From the plot below, it is clear that there is imbalance in the target variable as about 75% observations below to the negative class (Churn = "False"). To handle class imbalance, we will use `precision`, `recall` and `f1` score as the model performance evaluation metric instead of the default `accuracy` metric.
+We did exploratory data analysis (EDA) on the training data to get a preliminary understanding of the input features. We first looked at the distribution of target (`Churn`) class to understand class imbalanced. From the plot below, it is clear that there is imbalance in the target variable as about 75% observations below to the negative class (Churn = "False"). To handle class imbalance, we will use `precision`, `recall` and `f1` score as the model performance evaluation metric instead of the default `accuracy` metric. We used a logistic regression algorithm to build a classification model to predict which customers are likely to churn from their telecommunications company.
 
 ```{r class imbalance, echo=FALSE, fig.cap = "Figure 1: Distribution of response variable shows class imbalance", out.width = '40%', fig.align="center"}
 knitr::include_graphics("../results/figure_1_class_imbalance.png")
