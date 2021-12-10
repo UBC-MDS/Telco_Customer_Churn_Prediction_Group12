@@ -1,6 +1,6 @@
 ---
 title: "Telco_Customer_Churn_Prediction_Report"
-author: "Adam Morphy, Zihan Zhou, Anupriya Srivastava, Jordan Casoli"
+author: "Adam Morphy, Anupriya Srivastava, Jordan Casoli,Zihan Zhou"
 date: "26/11/2021"
 always_allow_html: true
 output: 
@@ -21,7 +21,7 @@ In this project, we examined the following question: Can we construct a machine 
 
 # Introduction
 
-Customer churn risk, the risk of customers switching to another company, is considered one of the most significant threats to the revenue of telecommunication companies. (@pustokhina2021multi) The average churn rate in the telecom industry is approximately 1.9% per month, which translates to discontinued service for one in fifty subscribers of a given company.(@team_2020) Churn is defined as whether or not a particular customer has left the company, with true representing a customer that has left, and false representing a customer that still maintains service with the company. Moreover, it is known that the cost of acquiring new customers is significantly higher than the cost of retaining them. (@pustokhina2021multi) Thus, it is clear that reducing churn risk and increasing customer retention rate is a key strategic challenge in the telecommunication industry. 
+Customer churn risk, the risk of customers switching to another company, is considered one of the most significant threats to the revenue of telecommunication companies. (@pustokhina2021multi) The average churn rate in the telecom industry is approximately 2.2% per month, which translates to discontinued service for one in fifty subscribers of a given company.(@team_2020) Churn is defined as whether or not a particular customer has left the company, with true representing a customer that has left, and false representing a customer that still maintains service with the company. Moreover, it is known that the cost of acquiring new customers is significantly higher than the cost of retaining them. (@pustokhina2021multi) Thus, it is clear that reducing churn risk and increasing customer retention rate is a key strategic challenge in the telecommunication industry. 
 
 In our project, we are identifying a predictive classification model that can provide insights into which customers (based on their traits) are at higher risk of churning. Answering this question has important practical managerial implications for telecommunication companies because it is a crucial step in understanding how to reduce this risk and thus create higher customer lifetime value. Further, this predictive tool will be considered a contribution to the modern telecommunication customer relationship management systems.
 
