@@ -18,6 +18,7 @@ dependencies:
   - r-base
   - r-tidyverse
   - r-knitr
+  - vega-lite-cli
   - pip:
     - chromedriver-py
     - lxml
