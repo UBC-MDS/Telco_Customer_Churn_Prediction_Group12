@@ -45,7 +45,7 @@ As mentioned in the above section, we did preliminary data cleaning, data wrangl
 
 We did exploratory data analysis (EDA) on the training data to get a preliminary understanding of the input features. We first looked at the distribution of target (`Churn`) class to understand class imbalanced. From the plot below, it is clear that there is imbalance in the target variable as about 75% observations below to the negative class (Churn = "False"). To handle class imbalance, we will use `precision`, `recall` and `f1` score as the model performance evaluation metric instead of the default `accuracy` metric.
 
-```{r class imbalance, echo=FALSE, fig.cap = "Figure 1: Class Imbalance", out.width = '40%', fig.align="center"}
+```{r class imbalance, echo=FALSE, fig.cap = "Figure 1: Distribution of response variable shows class imbalance", out.width = '40%', fig.align="center"}
 knitr::include_graphics("../results/figure_1_class_imbalance.png")
 ```
 
@@ -53,13 +53,13 @@ We then segregated the features as numerical and categorical exploratory variabl
 
 For numerical variables, we looked into the distribution of these features for the two target classes. It was observed that `Tenure` shows split between the two target classes, where as the other two features `Monthly Charges` and `Total Charges` do not provide a clear bifurcation between th two classes. Hence, `Tenure` feature seems to be important where as `Monthly Charges` and `Total Charges` do not look too important.
 
-```{r numerical features distribution, echo=FALSE, fig.cap = "Figure 2: Numerical Features Distribution", out.width = '100%', fig.align="center"}
+```{r numerical features distribution, echo=FALSE, fig.cap = "Figure 2: Distribution of numerical features for response variable indicates that Tenure may be important for prediction", out.width = '100%', fig.align="center"}
 knitr::include_graphics("../results/figure_2_numeric_feat_dist.png")
 ```
 
 We also analyzed the correlation between the three numerical features. Here, it was observed that there is high positive correlation between `Tenure` and `Total Charges`. The correlation between numeric features is an important consideration while interpreting the model. In case, any two features are highly correlated, we may have to merge them together or drop one of them to improve model performance. This correlation is represented using a heat-map, which gives correlation values and color codes.
 
-```{r numerical features correlation, echo=FALSE, fig.cap = "Figure 3: Numerical Features Correlation", out.width = '60%', fig.align="center"}
+```{r numerical features correlation, echo=FALSE, fig.cap = "Figure 3: Correlation chart for numerical features shows high correlation between input variables, Tenure and Total_charges", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/figure_3_numeric_feat_corr.png")
 ```
 
@@ -71,13 +71,13 @@ knitr::include_graphics("../results/table_1_cat_unique_values.png")
 
 We observed the distribution of categorical features pertaining to demographics. From the bar charts, we can pick out the categories which have a higher ratio of positive class (Churn="True"). It can be observed that people with no dependents, no partner and senior citizens had a higher Churn.
 
-```{r categorical demographic features, echo=FALSE, fig.cap = "Figure 4: Categorical Demographic Features", out.width = '40%', fig.align="center"}
+```{r categorical demographic features, echo=FALSE, fig.cap = "Figure 4: Distribution of response variable for demographic features indicates Partner(Y/N) may be important for prediction", out.width = '40%', fig.align="center"}
 knitr::include_graphics("../results/figure_4_cat_feat_churn_dist.png")
 ```
 
 We further observed the distribution of categorical features pertaining to Telecom Company services. For this, we used 2D histograms. In these plots, we observed the categories for which there were higher number of positive classes (Churn = "True"). It was noted that for various features, the following categories have higher Churn rate: Internet Service (Fiber Optic service), Contract (Monthly), Online Security (No), Online Backup (No), Payment Method (Electronic Check), Paperless Billing (Yes), Tech Support (No), Device Protection (No). It was also noted the for the following features, customer churn was equally distributed across all categories: Multiple Lines, Streaming Movies, Streaming TV.
 
-```{r categorical service features, echo=FALSE, fig.cap = "Figure 5: Categorical Service Features", out.width = '60%', fig.align="center"}
+```{r categorical service features, echo=FALSE, fig.cap = "Figure 5: 2D histogram showing distribution of response variables across Categories", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/figure_5_cat_feat_2dhist.png")
 ```
 
@@ -119,7 +119,7 @@ classification_report_df |> knitr::kable(caption = "Table 4: Classification Repo
 
 Given the business problem that our prediction algorithm is trying to solve, it was more important for us to be able to identify the Churn class correctly (to minimize false negatives). This is because it is very costly for company to loose customers and attract new ones, and much less costly to keep them. Therefore we want our model to make more false positives than false negatives, in order to avoid the cost of miss classifying a leaving customer. As evidenced by the confusion matrix below, our model made 413 false positives and only 97 false negatives:
 
-```{r confusion matrix, echo=FALSE, message=FALSE, fig.cap = "Figure 6: Confusion Matrix", out.width = '60%', fig.align="center"}
+```{r confusion matrix, echo=FALSE, message=FALSE, fig.cap = "Figure 6: Confusion Matrix shows low number of False Negatives", out.width = '60%', fig.align="center"}
 knitr::include_graphics("../results/confusion_matrix.png")
 ```
 
