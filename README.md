@@ -1,6 +1,12 @@
 # Telco Customer Churn Predictor
 
-- Contributors: Adam Morphy, Anupriya Srivastava, Jordan Casoli, Zihan Zhou
+Contributors: 
+- Adam Morphy
+- Anupriya Srivastava
+- Jordan Casoli
+- Zihan Zhou
+
+Data Analytics project performed by Group 12 for DSCI 522 (Data Science Workflow), a course in the Master of Data Science program at the University of British Columbia.
 
 ## About
 
