@@ -47,3 +47,5 @@ RUN pip install dataframe_image
 RUN pip install altair-saver
 
 RUN pip install lxml
+
+RUN pip install seaborn
