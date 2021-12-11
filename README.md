@@ -73,7 +73,7 @@ make clean
 
 Below image can demonstrate the dependency diagram for making the report by Makefile
 
-<img src="Makefile.png">
+<img src="Makefile.png" alt="drawing" style="height:100px;"/>
 
 
 ## Environment
