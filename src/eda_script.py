@@ -60,8 +60,8 @@ def main(input, out_dir):
 
     # Analysing class imbalance for target variable
     target_class_imbalance = alt.Chart(train_df, title='Class imbalance').mark_bar(opacity=0.6).encode(
-                                    alt.X('Churn:N'),
-                                    alt.Y('count()', title='Count'),
+                                    alt.X('count()', title='Count'),
+                                    alt.Y('Churn:N'),
                                     color='Churn',
                                     ).properties(
                                         width=200, height=200
