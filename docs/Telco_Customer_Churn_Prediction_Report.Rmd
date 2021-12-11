@@ -1,7 +1,7 @@
 ---
-title: "Telco_Customer_Churn_Prediction_Report"
+title: "Telco Customer Churn Prediction Report"
 author: "Adam Morphy, Anupriya Srivastava, Jordan Casoli,Zihan Zhou"
-date: "26/11/2021"
+date: "10/12/2021"
 always_allow_html: true
 output: 
   html_document:
