@@ -73,6 +73,9 @@ make clean
 
 Below image can demonstrate the dependency diagram for making the report by Makefile
 
+<img src="Makefile.png" width="2000" height="500">
+
+
 ## Environment
 
 The project environment can be found
